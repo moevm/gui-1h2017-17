@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Player</class>
- <widget class="QWidget" name="Player">
+ <class>EditorWidget</class>
+ <widget class="QWidget" name="EditorWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>306</width>
-    <height>161</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
-  <widget class="QScrollBar" name="horizontalScrollBar">
+  <widget class="QSlider" name="verticalSlider">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>160</width>
-     <height>16</height>
+     <x>10</x>
+     <y>10</y>
+     <width>22</width>
+     <height>160</height>
     </rect>
    </property>
    <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+    <enum>Qt::Vertical</enum>
    </property>
   </widget>
  </widget>

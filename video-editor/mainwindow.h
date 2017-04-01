@@ -18,7 +18,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    //Player *pl;
 };
 
 #endif // MAINWINDOW_H

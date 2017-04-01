@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Player</class>
- <widget class="QWidget" name="Player">
+ <class>FileManagerWidget</class>
+ <widget class="QWidget" name="FileManagerWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>306</width>
-    <height>161</height>
+    <width>120</width>
+    <height>93</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
-  <widget class="QScrollBar" name="horizontalScrollBar">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>20</y>
-     <width>160</width>
-     <height>16</height>
+     <y>10</y>
+     <width>47</width>
+     <height>13</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+   <property name="text">
+    <string>Hi</string>
    </property>
   </widget>
  </widget>

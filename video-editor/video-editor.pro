@@ -25,12 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    player.cpp
+    player.cpp \
+    effectswidget.cpp \
+    filemanagerwidget.cpp \
+    editorwidget.cpp
 
 HEADERS  += mainwindow.h \
-    player.h
+    player.h \
+    effectswidget.h \
+    filemanagerwidget.h \
+    editorwidget.h
 
 FORMS    += mainwindow.ui \
-    player.ui
+    player.ui \
+    effectswidget.ui \
+    filemanagerwidget.ui \
+    editorwidget.ui
 
 DISTFILES +=
