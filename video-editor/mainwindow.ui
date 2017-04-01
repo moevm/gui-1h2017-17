@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>620</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>620</width>
      <height>21</height>
     </rect>
    </property>
@@ -34,11 +34,20 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>279</width>
+     <height>151</height>
+    </size>
+   </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(148, 255, 232);</string>
    </property>
    <property name="features">
-    <set>QDockWidget::NoDockWidgetFeatures</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -46,8 +55,14 @@
    <widget class="FileManagerWidget" name="file_manager_w"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget_3">
+   <property name="minimumSize">
+    <size>
+     <width>620</width>
+     <height>124</height>
+    </size>
+   </property>
    <property name="features">
-    <set>QDockWidget::NoDockWidgetFeatures</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
@@ -55,8 +70,14 @@
    <widget class="EditorWidget" name="editor_w"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget_4">
+   <property name="minimumSize">
+    <size>
+     <width>323</width>
+     <height>302</height>
+    </size>
+   </property>
    <property name="features">
-    <set>QDockWidget::NoDockWidgetFeatures</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -64,11 +85,17 @@
    <widget class="Player" name="player_w"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget_7">
+   <property name="minimumSize">
+    <size>
+     <width>279</width>
+     <height>150</height>
+    </size>
+   </property>
    <property name="floating">
     <bool>false</bool>
    </property>
    <property name="features">
-    <set>QDockWidget::NoDockWidgetFeatures</set>
+    <set>QDockWidget::DockWidgetMovable</set>
    </property>
    <property name="windowTitle">
     <string notr="true"/>
