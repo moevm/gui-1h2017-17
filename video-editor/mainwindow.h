@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "player.h"
+#include "filemanagerwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +18,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    FileManagerWidget *fileManager;
 };
 
 #endif // MAINWINDOW_H
