@@ -1315,6 +1315,9 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
    <property name="autoFillBackground">
     <bool>true</bool>
    </property>
