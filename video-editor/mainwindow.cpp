@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    fileManager = new FileManagerWidget();
+    fileManager = new FileManagerWidget(ui->centralWidget);
     setCentralWidget(fileManager);
 }
 
