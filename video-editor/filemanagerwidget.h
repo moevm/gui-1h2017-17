@@ -16,6 +16,8 @@ public:
     explicit FileManagerWidget(QWidget *parent = 0);
     ~FileManagerWidget();
 
+    void showSize();
+
 private slots:
 
     void on_addAudio_clicked();
@@ -29,7 +31,14 @@ private:
     QList <QStandardItem *> audioFiles;
     QList <QStandardItem *> videoFiles;
     QList <QStandardItem *> imageFiles;
+
+    QStandardItemModel* filesModel;
+
     QString homeDir;
+
+    void setIcons();
+    void update();
+    void displayFile(QString fileName, char type);
 
 };
 

@@ -16,9 +16,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void resizeEvent(QResizeEvent*);
+
 private:
     Ui::MainWindow *ui;
     FileManagerWidget *fileManager;
+
 };
 
 #endif // MAINWINDOW_H

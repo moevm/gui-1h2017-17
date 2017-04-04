@@ -2,7 +2,7 @@
 #include "ui_filemanagerwidget.h"
 
 #include <QFileDialog>
-#include <QStandardItem>
+#include <QTableWidgetItem>
 
 #include "QtDebug"
 
@@ -11,11 +11,19 @@ FileManagerWidget::FileManagerWidget(QWidget *parent) :
     ui(new Ui::FileManagerWidget)
 {
     ui->setupUi(this);
-    homeDir = "/";
+    homeDir = "../../../!Musik/Depeche Mode";
 
-    ui->addAudio->setIcon(QIcon("../addAudio.png"));
-    ui->addVideo->setIcon(QIcon("../addVideo.png"));
-    ui->addImage->setIcon(QIcon("../addImage.png"));
+    filesModel = new QStandardItemModel(this);
+    ui->tableView->setModel(filesModel);
+    ui->tableView->resizeColumnsToContents();
+    ui->tableView->horizontalHeader()->setStretchLastSection(true);
+    ui->tableView->setRowHeight(0,100);
+    ui->tableView->setRowHeight(1,100);
+
+
+    setIcons();
+
+    qDebug() << this->size();
 }
 
 FileManagerWidget::~FileManagerWidget()
@@ -33,8 +41,17 @@ void FileManagerWidget::on_addAudio_clicked()
                             "Аудиофайлы (*.mp3 *.m4a *.wav *.aif *.aifc *.aiff *.snd *.au *.mpa *.mp2 *.wma *.asf)");
 
     foreach (QString filePath, files) {
+
+        QImage image = QImage("../addAudio.png");
+        image = image.scaled(40,40);
+        QStandardItem *itemImage = new QStandardItem();
+        itemImage->setData(QVariant(QPixmap::fromImage(image)), Qt::DecorationRole);
+        filesModel->setItem(filesModel->rowCount(), 0, itemImage);
+
         fileName = QDir(filePath).dirName();
-        audioFiles.append(new QStandardItem(QDir(filePath).dirName()));
+        QStandardItem *item = new QStandardItem(fileName);
+        audioFiles.append(item);
+        filesModel->setItem(filesModel->rowCount()-1, 1,item);
     }
     if (files.size() > 0){
         homeDir = files.at(0);
@@ -80,4 +97,24 @@ void FileManagerWidget::on_addImage_clicked()
         homeDir.left(homeDir.lastIndexOf("/")+1);
     }
 }
+
+void FileManagerWidget::setIcons()
+{
+    ui->addAudio->setIcon(QIcon("../addAudio.png"));
+    ui->addVideo->setIcon(QIcon("../addVideo.png"));
+    ui->addImage->setIcon(QIcon("../addImage.png"));
+    ui->record->setIcon(QIcon("../record.png"));
+}
+
+void FileManagerWidget::update(){
+
+}
+
+void FileManagerWidget::showSize()
+{
+    qDebug() << this->size();
+    qDebug() << this->pos().x();
+    qDebug() << this->pos().y();
+}
+
 
