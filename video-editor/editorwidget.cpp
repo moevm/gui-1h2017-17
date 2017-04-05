@@ -17,7 +17,7 @@ EditorWidget::~EditorWidget()
 
 void EditorWidget::changeSize()
 {
-    int w = this->width() - 70;
+    int w = this->width() - 80;
     int h = this->height() - 20;
-    ui->verticalLayoutWidget->setGeometry(60,10,w,h);
+    ui->verticalLayoutWidget->setGeometry(70,10,w,h);
 }
