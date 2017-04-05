@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include <QWidget>
-
+#include <QMultimedia>
 
 namespace Ui {
 class Player;
