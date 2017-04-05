@@ -16,7 +16,7 @@ public:
     explicit FileManagerWidget(QWidget *parent = 0);
     ~FileManagerWidget();
 
-    void showSize();
+    void changeSize();
 
 private slots:
 

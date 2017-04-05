@@ -17,13 +17,9 @@ FileManagerWidget::FileManagerWidget(QWidget *parent) :
     ui->tableView->setModel(filesModel);
     ui->tableView->resizeColumnsToContents();
     ui->tableView->horizontalHeader()->setStretchLastSection(true);
-    ui->tableView->setRowHeight(0,100);
-    ui->tableView->setRowHeight(1,100);
-
-
+    //ui->tableView->setRowHeight(0,100);
+    //ui->tableView->setRowHeight(1,100);
     setIcons();
-
-    qDebug() << this->size();
 }
 
 FileManagerWidget::~FileManagerWidget()
@@ -110,11 +106,10 @@ void FileManagerWidget::update(){
 
 }
 
-void FileManagerWidget::showSize()
+void FileManagerWidget::changeSize()
 {
-    qDebug() << this->size();
-    qDebug() << this->pos().x();
-    qDebug() << this->pos().y();
+    ui->tableView->setGeometry(10,60, this->size().width()-20, this->size().height()-70);
+    ui->line->setGeometry(10, 40,this->size().width()-20, 16);
 }
 
 

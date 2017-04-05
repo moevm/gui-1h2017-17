@@ -17,5 +17,5 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::resizeEvent(QResizeEvent *event){
-    this->fileManager->showSize();
+    this->fileManager->changeSize();
 }
