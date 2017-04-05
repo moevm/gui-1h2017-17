@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::Player *ui;
+
+    void setIcons();
 };
 
 #endif // PLAYER_H

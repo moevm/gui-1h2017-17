@@ -38,7 +38,6 @@ private:
     QString homeDir;
 
     void setIcons();
-    void update();
     void tableViewSettings();
 
     void addItem(QStringList& , QImage&, QList <QStandardItem*>&);

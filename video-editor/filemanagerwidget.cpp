@@ -65,10 +65,6 @@ void FileManagerWidget::setIcons()
     ui->record->setIcon(QIcon("../record.png"));
 }
 
-void FileManagerWidget::update(){
-
-}
-
 void FileManagerWidget::tableViewSettings()
 {
     filesModel = new QStandardItemModel(this);
