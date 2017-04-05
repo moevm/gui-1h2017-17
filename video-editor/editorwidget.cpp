@@ -1,6 +1,8 @@
 #include "editorwidget.h"
 #include "ui_editorwidget.h"
 
+#include "QtDebug"
+
 EditorWidget::EditorWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EditorWidget)
@@ -11,4 +13,11 @@ EditorWidget::EditorWidget(QWidget *parent) :
 EditorWidget::~EditorWidget()
 {
     delete ui;
+}
+
+void EditorWidget::changeSize()
+{
+    int w = this->width() - 70;
+    int h = this->height() - 20;
+    ui->verticalLayoutWidget->setGeometry(60,10,w,h);
 }
