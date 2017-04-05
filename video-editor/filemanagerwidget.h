@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QStandardItem>
+#include <QStringList>
 
 namespace Ui {
 class FileManagerWidget;
@@ -38,7 +39,9 @@ private:
 
     void setIcons();
     void update();
-    void displayFile(QString fileName, char type);
+    void tableViewSettings();
+
+    void addItem(QStringList& , QImage&, QList <QStandardItem*>&);
 
 };
 
