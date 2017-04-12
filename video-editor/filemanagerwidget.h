@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QStandardItem>
 #include <QStringList>
+#include <QKeyEvent>
 
 namespace Ui {
 class FileManagerWidget;
@@ -18,20 +19,22 @@ public:
     ~FileManagerWidget();
 
     void changeSize();
+    void deleteItem();
 
 private slots:
 
     void on_addAudio_clicked();
-
     void on_addVideo_clicked();
-
     void on_addImage_clicked();
 
 private:
     Ui::FileManagerWidget *ui;
-    QList <QStandardItem *> audioFiles;
-    QList <QStandardItem *> videoFiles;
-    QList <QStandardItem *> imageFiles;
+//    QList <QStandardItem *> audioFiles;
+//    QList <QStandardItem *> videoFiles;
+//    QList <QStandardItem *> imageFiles;
+    QVector <int> activItems;
+
+    QList <QUrl> allFiles;
 
     QStandardItemModel* filesModel;
 
@@ -39,8 +42,7 @@ private:
 
     void setIcons();
     void tableViewSettings();
-
-    void addItem(QStringList& , QImage&, QList <QStandardItem*>&);
+    void addItem(QStringList& , QImage&, QList <QUrl>&);
 
 };
 

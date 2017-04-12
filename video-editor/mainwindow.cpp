@@ -15,6 +15,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == 16777223){
+        fileManager->deleteItem();
+    }
+}
+
 
 void MainWindow::resizeEvent(QResizeEvent *event){
     this->fileManager->changeSize();

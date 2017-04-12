@@ -31,7 +31,7 @@ void FileManagerWidget::on_addAudio_clicked()
                             "Аудиофайлы (*.mp3 *.m4a *.wav *.aif *.aifc *.aiff *.snd *.au *.mpa *.mp2 *.wma *.asf)");
 
     QImage image = QImage("../addAudio.png");
-    addItem(files, image, audioFiles);
+    addItem(files, image, allFiles);
 }
 
 void FileManagerWidget::on_addVideo_clicked()
@@ -43,7 +43,7 @@ void FileManagerWidget::on_addVideo_clicked()
                             "Видео (*.avi *.mpg *.m1v *.mp2 *.mp2v *.mpeg *.mpe *.mpv2 *.wm *wmv *.asf)");
 
     QImage image = QImage("../addVideo.png");
-    addItem(files, image, videoFiles);
+    addItem(files, image, allFiles);
 }
 
 void FileManagerWidget::on_addImage_clicked()
@@ -54,7 +54,7 @@ void FileManagerWidget::on_addImage_clicked()
                             homeDir,
                             "Изображения (*.jpg *.jpeg *.jpe *.jfif *.gif *.png *.bmp *.dib *.tif *.tiff *.wmf *.emf)");
     QImage image = QImage("../addImage.png");
-    addItem(files, image, imageFiles);
+    addItem(files, image, allFiles);
 }
 
 void FileManagerWidget::setIcons()
@@ -75,7 +75,7 @@ void FileManagerWidget::tableViewSettings()
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
-void FileManagerWidget::addItem(QStringList & files, QImage & image, QList<QStandardItem*> & list)
+void FileManagerWidget::addItem(QStringList & files, QImage & image, QList<QUrl> & list)
 {
 
     QString fileName;
@@ -87,7 +87,7 @@ void FileManagerWidget::addItem(QStringList & files, QImage & image, QList<QStan
 
         fileName = QDir(filePath).dirName();
         QStandardItem *item = new QStandardItem(fileName);
-        list.append(item);
+        list.append(filePath);
         filesModel->setItem(filesModel->rowCount()-1, 1,item);
         ui->tableView->setRowHeight(filesModel->rowCount()-1,40);
     }
@@ -104,4 +104,20 @@ void FileManagerWidget::changeSize()
     ui->line->setGeometry(10, 40,this->size().width()-20, 16);
 }
 
+void FileManagerWidget::deleteItem()
+{
 
+    int size = ui->tableView->selectionModel()->selectedRows().size();
+    QList <QModelIndex> del = ui->tableView->selectionModel()->selectedRows();
+
+    //qDebug() << del;
+    for(int i = size-1; i >= 0;i--){
+        //qDebug() << "я зашел в делит" << i;
+        //qDebug() << ui->tableView->selectionModel()->selectedRows();
+        int numb = ui->tableView->selectionModel()->selectedRows().at(i).row();
+        //qDebug() << "Удаляю элемент " << numb;
+        filesModel->removeRow(numb);
+        allFiles.removeAt(numb);
+        qDebug() << "Начинаю вывод после удаления" <<endl <<allFiles;
+    }
+}
