@@ -26,6 +26,5 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::resizeEvent(QResizeEvent *event){
     this->fileManager->changeSize();
-    ui->editor_w->changeSize();
     player->setSize();
 }

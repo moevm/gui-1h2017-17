@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMediaPlayer>
+#include <qvideosurfaceformat.h>
 
 namespace Ui {
 class Player;
@@ -21,6 +22,8 @@ private:
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;
     void setIcons();
+    void initPlayer();
+
 };
 
 #endif // PLAYER_H

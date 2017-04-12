@@ -8,6 +8,7 @@ Player::Player(QWidget *parent) :
     ui->setupUi(this);
     setIcons();
     setSize();
+    initPlayer();
 }
 
 Player::~Player()
@@ -25,4 +26,11 @@ void Player::setIcons()
 
 void Player::setSize(){
      ui->mediaPlayer->setGeometry(0,0,this->width(),this->width()/5*3);
+}
+
+void Player::initPlayer(){
+    mediaPlayer = new QMediaPlayer(0,QMediaPlayer::VideoSurface);
+    mediaPlayer->setVideoOutput(ui->mediaPlayer);
+    mediaPlayer->setMedia(QUrl("../../gravity.avi"));
+    mediaPlayer->play();
 }
