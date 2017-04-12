@@ -26,7 +26,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     FileManagerWidget *fileManager;
-
 };
 
 #endif // MAINWINDOW_H

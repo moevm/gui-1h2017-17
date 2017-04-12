@@ -22,7 +22,7 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="Player" name="widget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -499,6 +499,14 @@
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Player</class>
+   <extends>QWidget</extends>
+   <header>player.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

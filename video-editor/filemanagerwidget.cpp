@@ -106,18 +106,12 @@ void FileManagerWidget::changeSize()
 
 void FileManagerWidget::deleteItem()
 {
-
     int size = ui->tableView->selectionModel()->selectedRows().size();
-    QList <QModelIndex> del = ui->tableView->selectionModel()->selectedRows();
-
-    //qDebug() << del;
     for(int i = size-1; i >= 0;i--){
-        //qDebug() << "я зашел в делит" << i;
-        //qDebug() << ui->tableView->selectionModel()->selectedRows();
         int numb = ui->tableView->selectionModel()->selectedRows().at(i).row();
-        //qDebug() << "Удаляю элемент " << numb;
+        qDebug() << filesModel->item(0,1)->data().toString();
+        qDebug() << filesModel->item(0,0)->data().toString();
         filesModel->removeRow(numb);
         allFiles.removeAt(numb);
-        qDebug() << "Начинаю вывод после удаления" <<endl <<allFiles;
     }
 }
