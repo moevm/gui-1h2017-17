@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     fileManager = new FileManagerWidget(ui->centralWidget);
     setCentralWidget(fileManager);
+    player = ui->player_w;
 }
 
 MainWindow::~MainWindow()
@@ -26,4 +27,5 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::resizeEvent(QResizeEvent *event){
     this->fileManager->changeSize();
     ui->editor_w->changeSize();
+    player->setSize();
 }

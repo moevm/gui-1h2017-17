@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include "filemanagerwidget.h"
+#include "player.h"
 #include "QtDebug"
 
 namespace Ui {
@@ -26,6 +27,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     FileManagerWidget *fileManager;
+    Player* player;
 };
 
 #endif // MAINWINDOW_H

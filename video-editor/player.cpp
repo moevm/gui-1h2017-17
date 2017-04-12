@@ -7,11 +7,13 @@ Player::Player(QWidget *parent) :
 {
     ui->setupUi(this);
     setIcons();
+    setSize();
 }
 
 Player::~Player()
 {
     delete ui;
+    delete mediaPlayer;
 }
 
 void Player::setIcons()
@@ -19,4 +21,8 @@ void Player::setIcons()
     ui->play->setIcon(QIcon("../play.png"));
     ui->pause->setIcon(QIcon("../pause.png"));
     ui->stop->setIcon(QIcon("../stop.png"));
+}
+
+void Player::setSize(){
+     ui->mediaPlayer->setGeometry(0,0,this->width(),this->width()/5*3);
 }

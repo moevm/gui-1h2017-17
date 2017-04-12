@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include <QWidget>
-#include <QMultimedia>
+#include <QMediaPlayer>
 
 namespace Ui {
 class Player;
@@ -15,10 +15,11 @@ class Player : public QWidget
 public:
     explicit Player(QWidget *parent = 0);
     ~Player();
+    void setSize();
 
 private:
     Ui::Player *ui;
-
+    QMediaPlayer* mediaPlayer;
     void setIcons();
 };
 
