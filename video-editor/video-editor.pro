@@ -28,13 +28,15 @@ SOURCES += main.cpp\
     player.cpp \
     effectswidget.cpp \
     filemanagerwidget.cpp \
-    editorwidget.cpp
+    editorwidget.cpp \
+    storageservice.cpp
 
 HEADERS  += mainwindow.h \
     player.h \
     effectswidget.h \
     filemanagerwidget.h \
-    editorwidget.h
+    editorwidget.h \
+    storageservice.h
 
 FORMS    += mainwindow.ui \
     player.ui \

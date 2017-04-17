@@ -1,6 +1,6 @@
 #include "filemanagerwidget.h"
 #include "ui_filemanagerwidget.h"
-
+#include "storageservice.h"
 #include <QFileDialog>
 #include <QTableWidgetItem>
 
@@ -12,6 +12,9 @@ FileManagerWidget::FileManagerWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     homeDir = "../../../!Musik/Depeche Mode";
+
+    StorageService::Instance();
+
 
     tableViewSettings();
     setIcons();
