@@ -27,12 +27,13 @@ private slots:
     void on_addVideo_clicked();
     void on_addImage_clicked();
 
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
+signals:
+    void itemWasClicked(QUrl);
+
 private:
     Ui::FileManagerWidget *ui;
-//    QList <QStandardItem *> audioFiles;
-//    QList <QStandardItem *> videoFiles;
-//    QList <QStandardItem *> imageFiles;
-    QVector <int> activItems;
 
     QList <QUrl> allFiles;
 

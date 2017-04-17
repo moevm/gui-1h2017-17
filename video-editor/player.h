@@ -18,6 +18,16 @@ public:
     ~Player();
     void setSize();
 
+public slots:
+    void playSelectedItem(QUrl);
+
+private slots:
+    void on_play_clicked();
+
+    void on_pause_clicked();
+
+    void on_stop_clicked();
+
 private:
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;

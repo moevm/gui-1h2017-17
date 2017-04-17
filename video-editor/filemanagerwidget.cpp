@@ -109,9 +109,13 @@ void FileManagerWidget::deleteItem()
     int size = ui->tableView->selectionModel()->selectedRows().size();
     for(int i = size-1; i >= 0;i--){
         int numb = ui->tableView->selectionModel()->selectedRows().at(i).row();
-        qDebug() << filesModel->item(0,1)->data().toString();
-        qDebug() << filesModel->item(0,0)->data().toString();
         filesModel->removeRow(numb);
         allFiles.removeAt(numb);
     }
+}
+
+void FileManagerWidget::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    qDebug() << allFiles.at(index.row());
+    emit itemWasClicked(allFiles.at(index.row()));
 }
