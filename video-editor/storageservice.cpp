@@ -7,7 +7,10 @@ StorageService::StorageService()
 
 }
 
-
+void StorageService::addFileInfo(MovieMakerFileInfo* fileInfo){
+    //todo проверить на существование
+    allFiles.append(fileInfo);
+}
 
 bool StorageService::saveProject(QString projectName)
 {
@@ -28,14 +31,14 @@ bool StorageService::saveProject(QString projectName)
     return true;
 }
 
-bool StorageService::loadProject(QString projectName)
+QList <MovieMakerFileInfo*> StorageService::loadProject(QString projectName)
 {
 
     QFile readFile(projectName);
 
     if (!readFile.open(QIODevice::ReadWrite)) {
         qWarning("Доступ к файлу заблокирован.");
-        return false;
+        return QList <MovieMakerFileInfo*>();
     }
 
     QByteArray val = readFile.readAll();
@@ -43,29 +46,34 @@ bool StorageService::loadProject(QString projectName)
     QJsonObject object = QJsonDocument::fromJson(val).object();
     allFiles.clear();
     allFiles = read(object);
-    return true;
+    return allFiles;
 }
 
 void StorageService::write(QJsonObject &jsonObj)
 {
     QJsonArray jsonArray;
-    foreach (QUrl p, allFiles)
+    foreach (MovieMakerFileInfo* p, allFiles)
     {
         QJsonObject jsonPerson;
-        jsonPerson["path"] = p.path();
+        jsonPerson["path"] = p->path;
+        jsonPerson["imagePath"] = p->imagePath;
         jsonArray.append(jsonPerson);
     }
 
     jsonObj["allProjectFiles"] = jsonArray;
 }
 
-QList <QUrl> StorageService::read(QJsonObject &jsonObj)
+QList <MovieMakerFileInfo*> StorageService::read(QJsonObject &jsonObj)
 {
-    QList <QUrl> allFiles;
+    QList <MovieMakerFileInfo*> allFiles;
     QJsonArray jsonArray = jsonObj["allProjectFiles"].toArray();
-    foreach(QJsonValue path, jsonArray)
+    foreach(QJsonValue object, jsonArray)
     {
-        allFiles.append(path.toString());
+        QJsonObject jsonObject = object.toObject();
+        MovieMakerFileInfo* info = new MovieMakerFileInfo;
+        info->imagePath = jsonObject["imagePath"].toString();
+        info->path = jsonObject["path"].toString();
+        allFiles.append(info);
     }
     return allFiles;
 }

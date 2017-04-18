@@ -6,6 +6,11 @@
 #include <QKeyEvent>
 #include <QJsonDocument>
 
+struct MovieMakerFileInfo{
+    QString path;
+    QString imagePath;
+};
+
 class StorageService
 {
 public:
@@ -14,19 +19,19 @@ public:
           static StorageService INSTANCE;
           return INSTANCE;
        }
-    QList <QUrl> allFiles;
 
+    void addFileInfo(MovieMakerFileInfo* fileInfo);
 
     bool saveProject(QString projectName);
-    bool loadProject(QString projectName);
+    QList <MovieMakerFileInfo*> loadProject(QString projectName);
 
     void write(QJsonObject &jsonObj);
-    QList <QUrl> read(QJsonObject &jsonObj);
+    QList <MovieMakerFileInfo*> read(QJsonObject &jsonObj);
 
 
 private:
     StorageService();
-
+    QList <MovieMakerFileInfo*> allFiles;
 };
 
 #endif // STORAGESERVICE_H

@@ -19,8 +19,13 @@ public:
     ~FileManagerWidget();
 
     void changeSize();
+    void addItem(QString filePath, QString imagePath);
     void deleteItem();
     void clearAll();
+
+    QString audioImagePath = "../addAudio.png";
+    QString pictureImagePath = "../addImage.png";
+    QString videoImagePath = "../addVideo.png";
 
 private slots:
 
@@ -44,7 +49,7 @@ private:
 
     void setIcons();
     void tableViewSettings();
-    void addItem(QStringList& , QImage&);
+    void addItems(QStringList& , QString);
 
 
 };

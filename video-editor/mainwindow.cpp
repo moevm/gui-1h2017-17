@@ -51,5 +51,10 @@ void MainWindow::on_onProjectOpen_triggered()
             tr(""), "",
             tr("All Files (*)"));
     fileManager->clearAll();
-    StorageService::Instance().loadProject(fileName);
+    QList <MovieMakerFileInfo*> files = StorageService::Instance().loadProject(fileName);
+    foreach (MovieMakerFileInfo* fileInfo, files) {
+        fileManager->addItem(fileInfo->path,fileInfo->imagePath);
+    }
+
+
 }
