@@ -93,9 +93,6 @@ void FileManagerWidget::addItem(QStringList & files, QImage & image)
 
         StorageService::Instance().allFiles.append(filePath);
 
-        StorageService::Instance().saveProject("test12");
-
-        StorageService::Instance().loadProject("test12");
         filesModel->setItem(filesModel->rowCount()-1, 1,item);
         ui->tableView->setRowHeight(filesModel->rowCount()-1,40);
     }

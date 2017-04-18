@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QFileDialog>
 #include "filemanagerwidget.h"
 #include "player.h"
 #include "QtDebug"
@@ -23,6 +24,9 @@ public:
 
 private slots:
     void resizeEvent(QResizeEvent*);
+    void onProjectSaveSelect();
+
+    void on_onProjectSave_triggered();
 
 private:
     Ui::MainWindow *ui;

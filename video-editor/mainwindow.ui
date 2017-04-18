@@ -857,15 +857,23 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QMenuBar" name="menuBar">
+  <widget class="MenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>940</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuProject">
+    <property name="title">
+     <string>Проект</string>
+    </property>
+    <addaction name="onProjectOpen"/>
+    <addaction name="onProjectSave"/>
+   </widget>
+   <addaction name="menuProject"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="minimumSize">
@@ -2229,6 +2237,16 @@
    </attribute>
    <widget class="Player" name="player_w"/>
   </widget>
+  <action name="onProjectOpen">
+   <property name="text">
+    <string>Открыть</string>
+   </property>
+  </action>
+  <action name="onProjectSave">
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -2249,6 +2267,11 @@
    <extends>QWidget</extends>
    <header>player.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MenuBar</class>
+   <extends>QMenuBar</extends>
+   <header>menubar.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

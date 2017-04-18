@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "storageservice.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,4 +30,17 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::resizeEvent(QResizeEvent *event){
     this->fileManager->changeSize();
     player->setSize();
+}
+
+void MainWindow::onProjectSaveSelect(){
+
+}
+
+void MainWindow::on_onProjectSave_triggered()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+            tr("Save Address Book"), "",
+            tr("All Files (*)"));
+    StorageService::Instance().saveProject(fileName);
+
 }

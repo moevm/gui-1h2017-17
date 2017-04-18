@@ -20,7 +20,7 @@ bool StorageService::saveProject(QString projectName)
     }
 
     QJsonObject projectObject;
-    StorageService::Instance().write(projectObject);
+    write(projectObject);
     QJsonDocument saveDoc(projectObject);
     saveFile.write(saveDoc.toJson());
     saveFile.close();
@@ -41,15 +41,15 @@ bool StorageService::loadProject(QString projectName)
     QByteArray val = readFile.readAll();
     readFile.close();
     QJsonObject object = QJsonDocument::fromJson(val).object();
-    StorageService::Instance().allFiles.clear();
-    StorageService::Instance().allFiles = StorageService::Instance().read(object);
+    allFiles.clear();
+    allFiles = read(object);
     return true;
 }
 
 void StorageService::write(QJsonObject &jsonObj)
 {
     QJsonArray jsonArray;
-    foreach (QUrl p, StorageService::Instance().allFiles)
+    foreach (QUrl p, allFiles)
     {
         QJsonObject jsonPerson;
         jsonPerson["path"] = p.path();
