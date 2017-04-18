@@ -35,7 +35,7 @@ signals:
 private:
     Ui::FileManagerWidget *ui;
 
-    QList <QUrl> allFiles;
+
 
     QStandardItemModel* filesModel;
 
@@ -43,7 +43,7 @@ private:
 
     void setIcons();
     void tableViewSettings();
-    void addItem(QStringList& , QImage&, QList <QUrl>&);
+    void addItem(QStringList& , QImage&);
 
 };
 

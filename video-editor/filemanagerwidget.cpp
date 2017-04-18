@@ -34,7 +34,7 @@ void FileManagerWidget::on_addAudio_clicked()
                             "Аудиофайлы (*.mp3 *.m4a *.wav *.aif *.aifc *.aiff *.snd *.au *.mpa *.mp2 *.wma *.asf)");
 
     QImage image = QImage("../addAudio.png");
-    addItem(files, image, allFiles);
+    addItem(files, image);
 }
 
 void FileManagerWidget::on_addVideo_clicked()
@@ -46,7 +46,7 @@ void FileManagerWidget::on_addVideo_clicked()
                             "Видео (*.avi *.mpg *.m1v *.mp2 *.mp2v *.mpeg *.mpe *.mpv2 *.wm *wmv *.asf)");
 
     QImage image = QImage("../addVideo.png");
-    addItem(files, image, allFiles);
+    addItem(files, image);
 }
 
 void FileManagerWidget::on_addImage_clicked()
@@ -57,7 +57,7 @@ void FileManagerWidget::on_addImage_clicked()
                             homeDir,
                             "Изображения (*.jpg *.jpeg *.jpe *.jfif *.gif *.png *.bmp *.dib *.tif *.tiff *.wmf *.emf)");
     QImage image = QImage("../addImage.png");
-    addItem(files, image, allFiles);
+    addItem(files, image);
 }
 
 void FileManagerWidget::setIcons()
@@ -78,7 +78,7 @@ void FileManagerWidget::tableViewSettings()
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
-void FileManagerWidget::addItem(QStringList & files, QImage & image, QList<QUrl> & list)
+void FileManagerWidget::addItem(QStringList & files, QImage & image)
 {
 
     QString fileName;
@@ -90,7 +90,10 @@ void FileManagerWidget::addItem(QStringList & files, QImage & image, QList<QUrl>
 
         fileName = QDir(filePath).dirName();
         QStandardItem *item = new QStandardItem(fileName);
-        list.append(filePath);
+
+        StorageService::Instance().allFiles.append(filePath);
+
+        StorageService::Instance().saveProject("test");
         filesModel->setItem(filesModel->rowCount()-1, 1,item);
         ui->tableView->setRowHeight(filesModel->rowCount()-1,40);
     }
@@ -113,12 +116,12 @@ void FileManagerWidget::deleteItem()
     for(int i = size-1; i >= 0;i--){
         int numb = ui->tableView->selectionModel()->selectedRows().at(i).row();
         filesModel->removeRow(numb);
-        allFiles.removeAt(numb);
+        StorageService::Instance().allFiles.removeAt(numb);
     }
 }
 
 void FileManagerWidget::on_tableView_doubleClicked(const QModelIndex &index)
 {
-    qDebug() << allFiles.at(index.row());
-    emit itemWasClicked(allFiles.at(index.row()));
+    qDebug() << StorageService::Instance().allFiles.at(index.row());
+    emit itemWasClicked(StorageService::Instance().allFiles.at(index.row()));
 }
