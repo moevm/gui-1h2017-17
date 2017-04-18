@@ -107,11 +107,10 @@ void FileManagerWidget::addItem(QString filePath, QString imagePath)
     fileInfo->path = filePath;
 
     StorageService::Instance().addProjectFileInfo(fileInfo);
-    StorageService::Instance().addLastOpenedFile(fileInfo);
 
     filesModel->setItem(filesModel->rowCount()-1, 1,item);
     ui->tableView->setRowHeight(filesModel->rowCount()-1,40);
-
+    ui->tableView->setColumnWidth(0,40);
 }
 
 

@@ -22,9 +22,12 @@ public:
 
     void keyPressEvent(QKeyEvent *event);
 
+public slots:
+
+
+
 private slots:
     void resizeEvent(QResizeEvent*);
-    void onProjectSaveSelect();
 
     void on_projectSave_triggered();
 
@@ -32,10 +35,14 @@ private slots:
 
     void on_lastOpened_hovered();
 
+    void onProjectFileSelect(QString projectPath);
+
 private:
     Ui::MainWindow *ui;
     FileManagerWidget *fileManager;
     Player* player;
+
+    void openProject(QString fileName);
 };
 
 #endif // MAINWINDOW_H

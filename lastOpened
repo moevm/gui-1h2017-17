@@ -1,20 +1,8 @@
 {
     "allProjectFiles": [
         {
-            "imagePath": "../addImage.png",
-            "path": "/home/rogulenkoko/funkmap/wwwroot/images/icon.png"
-        },
-        {
-            "imagePath": "../addImage.png",
-            "path": "/home/rogulenkoko/funkmap/wwwroot/images/markers/brass.png"
-        },
-        {
-            "imagePath": "../addImage.png",
-            "path": "/home/rogulenkoko/funkmap/wwwroot/images/markers/keyboard.png"
-        },
-        {
-            "imagePath": "../addImage.png",
-            "path": "/home/rogulenkoko/funkmap/wwwroot/images/markers/bass.png"
+            "imagePath": "",
+            "path": "/home/rogulenkoko/q"
         }
     ]
 }
