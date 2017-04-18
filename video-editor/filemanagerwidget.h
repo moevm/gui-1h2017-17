@@ -20,6 +20,7 @@ public:
 
     void changeSize();
     void deleteItem();
+    void clearAll();
 
 private slots:
 
@@ -44,6 +45,7 @@ private:
     void setIcons();
     void tableViewSettings();
     void addItem(QStringList& , QImage&);
+
 
 };
 

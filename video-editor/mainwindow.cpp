@@ -39,8 +39,17 @@ void MainWindow::onProjectSaveSelect(){
 void MainWindow::on_onProjectSave_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-            tr("Save Address Book"), "",
+            tr(""), "",
             tr("All Files (*)"));
     StorageService::Instance().saveProject(fileName);
 
+}
+
+void MainWindow::on_onProjectOpen_triggered()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+            tr(""), "",
+            tr("All Files (*)"));
+    fileManager->clearAll();
+    StorageService::Instance().loadProject(fileName);
 }

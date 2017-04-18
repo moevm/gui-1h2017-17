@@ -119,6 +119,12 @@ void FileManagerWidget::deleteItem()
     }
 }
 
+void FileManagerWidget::clearAll()
+{
+    QStandardItemModel* model = (QStandardItemModel*)ui->tableView->model();
+    model->clear();
+}
+
 void FileManagerWidget::on_tableView_doubleClicked(const QModelIndex &index)
 {
     qDebug() << StorageService::Instance().allFiles.at(index.row());

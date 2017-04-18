@@ -28,6 +28,8 @@ private slots:
 
     void on_onProjectSave_triggered();
 
+    void on_onProjectOpen_triggered();
+
 private:
     Ui::MainWindow *ui;
     FileManagerWidget *fileManager;
