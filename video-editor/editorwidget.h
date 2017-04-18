@@ -11,11 +11,15 @@ class EditorWidget : public QWidget
 {
     Q_OBJECT
 
+
+public slots:
+    void changeSize();
+
 public:
     explicit EditorWidget(QWidget *parent = 0);
     ~EditorWidget();
 
-    //void changeSize();
+
 
 private:
     Ui::EditorWidget *ui;

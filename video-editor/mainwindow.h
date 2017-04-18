@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include "filemanagerwidget.h"
 #include "player.h"
+#include "editorwidget.h"
 #include "QtDebug"
 
 namespace Ui {
@@ -28,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     FileManagerWidget *fileManager;
     Player* player;
+    EditorWidget* editor;
 };
 
 #endif // MAINWINDOW_H

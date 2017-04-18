@@ -18,15 +18,16 @@ public:
     explicit FileManagerWidget(QWidget *parent = 0);
     ~FileManagerWidget();
 
-    void changeSize();
     void deleteItem();
+
+public slots:
+    void changeSize();
 
 private slots:
 
     void on_addAudio_clicked();
     void on_addVideo_clicked();
     void on_addImage_clicked();
-
     void on_tableView_doubleClicked(const QModelIndex &index);
 
 signals:

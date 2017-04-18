@@ -20,6 +20,7 @@ FileManagerWidget::FileManagerWidget(QWidget *parent) :
 FileManagerWidget::~FileManagerWidget()
 {
     delete ui;
+    delete filesModel;
 }
 
 void FileManagerWidget::on_addAudio_clicked()

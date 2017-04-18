@@ -15,17 +15,16 @@ class Player : public QWidget
 
 public:
     explicit Player(QWidget *parent = 0);
+    void resizeEvent(QResizeEvent* event);
     ~Player();
-    void setSize();
 
 public slots:
     void playSelectedItem(QUrl);
+    void changeSize();
 
 private slots:
     void on_play_clicked();
-
     void on_pause_clicked();
-
     void on_stop_clicked();
 
 private:
@@ -34,6 +33,8 @@ private:
     void setIcons();
     void initPlayer();
 
+signals:
+    sizeOfPlayerWasChanged();
 };
 
 #endif // PLAYER_H
