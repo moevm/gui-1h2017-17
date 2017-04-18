@@ -18,8 +18,10 @@ public:
 
 
     bool saveProject(QString projectName);
+    bool loadProject(QString projectName);
 
     void write(QJsonObject &jsonObj);
+    QList <QUrl> read(QJsonObject &jsonObj);
 
 
 private:
