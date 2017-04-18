@@ -4,6 +4,7 @@
 #include <QStandardItem>
 #include <QStringList>
 #include <QKeyEvent>
+#include <QQueue>
 #include <QJsonDocument>
 
 struct MovieMakerFileInfo{
@@ -20,18 +21,27 @@ public:
           return INSTANCE;
        }
 
-    void addFileInfo(MovieMakerFileInfo* fileInfo);
+    void addProjectFileInfo(MovieMakerFileInfo* fileInfo);
+    void addLastOpenedFile(MovieMakerFileInfo* fileInfo);
 
     bool saveProject(QString projectName);
     QList <MovieMakerFileInfo*> loadProject(QString projectName);
 
-    void write(QJsonObject &jsonObj);
+    bool saveLastOpenedFiles();
+    QList <MovieMakerFileInfo*> loadLastOpenedFiles();
+    QList <MovieMakerFileInfo*> getCacheLastOpenedFiles();
+
+    void write(QJsonObject &jsonObj, QList <MovieMakerFileInfo*> fileInfos);
     QList <MovieMakerFileInfo*> read(QJsonObject &jsonObj);
 
 
 private:
+    QString lastOpenedFilesPath = "../lastOpened";
+
     StorageService();
-    QList <MovieMakerFileInfo*> allFiles;
+    QList <MovieMakerFileInfo*> allProjectFiles;
+
+    QQueue <MovieMakerFileInfo*> lastOpenedFiles;
 };
 
 #endif // STORAGESERVICE_H

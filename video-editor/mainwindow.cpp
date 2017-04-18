@@ -10,12 +10,36 @@ MainWindow::MainWindow(QWidget *parent) :
     fileManager = new FileManagerWidget(ui->centralWidget);
     setCentralWidget(fileManager);
     player = ui->player_w;
-    QObject::connect(fileManager, SIGNAL(itemWasClicked(QUrl)),
-              player, SLOT(playSelectedItem(QUrl)));
+    QObject::connect(fileManager, SIGNAL(itemWasClicked(QUrl)), player, SLOT(playSelectedItem(QUrl)));
+
+    QList <MovieMakerFileInfo*> lastOpenedFiles = StorageService::Instance().loadLastOpenedFiles();
+    if(lastOpenedFiles.length() != 0){
+        foreach (MovieMakerFileInfo* fileInfo, lastOpenedFiles) {
+            ui->lastOpenedMenu->addAction(fileInfo->path);
+        }
+    }
+
 }
 
 MainWindow::~MainWindow()
 {
+    QList <MovieMakerFileInfo*> currentSavedFiles = StorageService::Instance().loadLastOpenedFiles();
+    QList <MovieMakerFileInfo*> cacheLastOpenedFiles = StorageService::Instance().getCacheLastOpenedFiles();
+    if(cacheLastOpenedFiles.length()<5) {
+
+        int difference = 5 - cacheLastOpenedFiles.length();
+
+        foreach (MovieMakerFileInfo* fileInfo, currentSavedFiles) {
+            if(difference == 0) break;
+            if(cacheLastOpenedFiles.contains(fileInfo)) continue;
+            StorageService::Instance().addLastOpenedFile(fileInfo);
+            difference--;
+        }
+
+    }
+    StorageService::Instance().saveLastOpenedFiles();
+
+
     delete ui;
 }
 
@@ -36,16 +60,15 @@ void MainWindow::onProjectSaveSelect(){
 
 }
 
-void MainWindow::on_onProjectSave_triggered()
+void MainWindow::on_projectSave_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
             tr(""), "",
             tr("All Files (*)"));
     StorageService::Instance().saveProject(fileName);
-
 }
 
-void MainWindow::on_onProjectOpen_triggered()
+void MainWindow::on_projectOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
             tr(""), "",
@@ -58,3 +81,4 @@ void MainWindow::on_onProjectOpen_triggered()
 
 
 }
+

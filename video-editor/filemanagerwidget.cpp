@@ -106,16 +106,12 @@ void FileManagerWidget::addItem(QString filePath, QString imagePath)
     fileInfo->imagePath = imagePath;
     fileInfo->path = filePath;
 
-    StorageService::Instance().addFileInfo(fileInfo);
+    StorageService::Instance().addProjectFileInfo(fileInfo);
+    StorageService::Instance().addLastOpenedFile(fileInfo);
 
     filesModel->setItem(filesModel->rowCount()-1, 1,item);
     ui->tableView->setRowHeight(filesModel->rowCount()-1,40);
 
-//    if (files.size() > 0){
-//        homeDir = files.at(0);
-//        homeDir.left(homeDir.lastIndexOf("/")+1);
-//    }
-    ui->tableView->setColumnWidth(0,40);
 }
 
 

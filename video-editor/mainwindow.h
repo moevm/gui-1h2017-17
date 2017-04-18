@@ -26,9 +26,11 @@ private slots:
     void resizeEvent(QResizeEvent*);
     void onProjectSaveSelect();
 
-    void on_onProjectSave_triggered();
+    void on_projectSave_triggered();
 
-    void on_onProjectOpen_triggered();
+    void on_projectOpen_triggered();
+
+    void on_lastOpened_hovered();
 
 private:
     Ui::MainWindow *ui;

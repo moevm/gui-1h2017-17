@@ -870,8 +870,14 @@
     <property name="title">
      <string>Проект</string>
     </property>
-    <addaction name="onProjectOpen"/>
-    <addaction name="onProjectSave"/>
+    <widget class="QMenu" name="lastOpenedMenu">
+     <property name="title">
+      <string>Открыть недавние..</string>
+     </property>
+    </widget>
+    <addaction name="projectOpen"/>
+    <addaction name="lastOpenedMenu"/>
+    <addaction name="projectSave"/>
    </widget>
    <addaction name="menuProject"/>
   </widget>
@@ -2237,14 +2243,19 @@
    </attribute>
    <widget class="Player" name="player_w"/>
   </widget>
-  <action name="onProjectOpen">
+  <action name="projectOpen">
    <property name="text">
     <string>Открыть</string>
    </property>
   </action>
-  <action name="onProjectSave">
+  <action name="projectSave">
    <property name="text">
     <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="actionDas">
+   <property name="text">
+    <string>das</string>
    </property>
   </action>
  </widget>

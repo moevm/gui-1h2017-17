@@ -1,15 +1,24 @@
 #include "storageservice.h"
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QQueue>
 
 StorageService::StorageService()
 {
 
 }
 
-void StorageService::addFileInfo(MovieMakerFileInfo* fileInfo){
+void StorageService::addProjectFileInfo(MovieMakerFileInfo* fileInfo){
     //todo проверить на существование
-    allFiles.append(fileInfo);
+    allProjectFiles.append(fileInfo);
+}
+
+void StorageService::addLastOpenedFile(MovieMakerFileInfo* fileInfo){
+    if(lastOpenedFiles.length() > 5){
+        lastOpenedFiles.dequeue();
+    }
+    lastOpenedFiles.enqueue( fileInfo);
+
 }
 
 bool StorageService::saveProject(QString projectName)
@@ -23,7 +32,26 @@ bool StorageService::saveProject(QString projectName)
     }
 
     QJsonObject projectObject;
-    write(projectObject);
+    write(projectObject, allProjectFiles);
+    QJsonDocument saveDoc(projectObject);
+    saveFile.write(saveDoc.toJson());
+    saveFile.close();
+
+    return true;
+}
+
+bool StorageService::saveLastOpenedFiles()
+{
+    QString lastOpenedFilesContainerPath = lastOpenedFilesPath;
+    QFile saveFile(lastOpenedFilesContainerPath);
+
+    if (!saveFile.open(QIODevice::ReadWrite)) {
+        qWarning("Доступ к файлу заблокирован.");
+        return false;
+    }
+
+    QJsonObject projectObject;
+    write(projectObject, lastOpenedFiles);
     QJsonDocument saveDoc(projectObject);
     saveFile.write(saveDoc.toJson());
     saveFile.close();
@@ -44,15 +72,37 @@ QList <MovieMakerFileInfo*> StorageService::loadProject(QString projectName)
     QByteArray val = readFile.readAll();
     readFile.close();
     QJsonObject object = QJsonDocument::fromJson(val).object();
-    allFiles.clear();
-    allFiles = read(object);
-    return allFiles;
+    allProjectFiles.clear();
+    allProjectFiles = read(object);
+    return allProjectFiles;
 }
 
-void StorageService::write(QJsonObject &jsonObj)
+QList <MovieMakerFileInfo*> StorageService::loadLastOpenedFiles()
+{
+
+    QFile readFile(lastOpenedFilesPath);
+
+    if (!readFile.open(QIODevice::ReadWrite)) {
+        qWarning("Доступ к файлу заблокирован.");
+        return QList <MovieMakerFileInfo*>();
+    }
+
+    QByteArray val = readFile.readAll();
+    readFile.close();
+    QJsonObject object = QJsonDocument::fromJson(val).object();
+    allProjectFiles.clear();
+    allProjectFiles = read(object);
+    return allProjectFiles;
+}
+
+QList <MovieMakerFileInfo*> StorageService::getCacheLastOpenedFiles(){
+    return lastOpenedFiles;
+}
+
+void StorageService::write(QJsonObject &jsonObj, QList <MovieMakerFileInfo*> fileInfos)
 {
     QJsonArray jsonArray;
-    foreach (MovieMakerFileInfo* p, allFiles)
+    foreach (MovieMakerFileInfo* p, fileInfos)
     {
         QJsonObject jsonPerson;
         jsonPerson["path"] = p->path;
