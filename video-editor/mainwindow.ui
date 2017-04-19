@@ -857,13 +857,13 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="MenuBar" name="menuBar">
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>940</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuProject">
@@ -2278,11 +2278,6 @@
    <extends>QWidget</extends>
    <header>player.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MenuBar</class>
-   <extends>QMenuBar</extends>
-   <header>menubar.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

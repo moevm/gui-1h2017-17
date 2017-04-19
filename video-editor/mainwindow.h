@@ -34,7 +34,7 @@ private slots:
 
     void on_projectOpen_triggered();
 
-    void on_lastOpened_hovered();
+    //void on_lastOpened_hovered();
 
     void onProjectFileSelect(QString path);
 
