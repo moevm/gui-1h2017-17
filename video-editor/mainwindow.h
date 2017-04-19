@@ -7,6 +7,7 @@
 #include "filemanagerwidget.h"
 #include "player.h"
 #include "QtDebug"
+#include "QSignalMapper"
 
 namespace Ui {
 class MainWindow;
@@ -35,7 +36,7 @@ private slots:
 
     void on_lastOpened_hovered();
 
-    void onProjectFileSelect(QString projectPath);
+    void onProjectFileSelect(QString path);
 
 private:
     Ui::MainWindow *ui;
@@ -43,6 +44,7 @@ private:
     Player* player;
 
     void openProject(QString fileName);
+    void loadLastOpenedFiles();
 };
 
 #endif // MAINWINDOW_H

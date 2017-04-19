@@ -93,7 +93,7 @@ void FileManagerWidget::addItem(QString filePath, QString imagePath)
 {
 
     QString fileName;
-    QImage image = QImage(pictureImagePath);
+    QImage image = QImage(imagePath);
     image = image.scaled(35,35);
     QStandardItem *itemImage = new QStandardItem();
     itemImage->setData(QVariant(QPixmap::fromImage(image)), Qt::DecorationRole);
@@ -123,13 +123,11 @@ void FileManagerWidget::changeSize()
 
 void FileManagerWidget::deleteItem()
 {
-    //тут надо не по позиции, а по какому-то ключу
     int size = ui->tableView->selectionModel()->selectedRows().size();
     for(int i = size-1; i >= 0;i--){
         int numb = ui->tableView->selectionModel()->selectedRows().at(i).row();
         filesModel->removeRow(numb);
-        //todo
-        //StorageService::Instance().allFiles.removeAt(numb);
+        //StorageService::Instance().allFiles.removeAt();
     }
 }
 

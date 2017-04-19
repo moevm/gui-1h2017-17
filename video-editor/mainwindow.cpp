@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "storageservice.h"
+#include <QSignalMapper>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,44 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     player = ui->player_w;
     QObject::connect(fileManager, SIGNAL(itemWasClicked(QUrl)), player, SLOT(playSelectedItem(QUrl)));
 
-    QList <MovieMakerFileInfo*> lastOpenedFiles = StorageService::Instance().loadLastOpenedFiles();
-    if(lastOpenedFiles.length() != 0){
-        foreach (MovieMakerFileInfo* fileInfo, lastOpenedFiles) {
-            QAction* action = new QAction(fileInfo->path, this);
-            //todo вот тут непонятная беда
-            connect(action, SIGNAL(triggered()), this, SLOT(onProjectFileSelect(fileInfo->path);));
-            ui->lastOpenedMenu->addAction(action);
-        }
-    }
-
+    loadLastOpenedFiles();
 }
 
 MainWindow::~MainWindow()
 {
-    QList <MovieMakerFileInfo*> currentSavedFiles = StorageService::Instance().loadLastOpenedFiles();
-    QList <MovieMakerFileInfo*> cacheLastOpenedFiles = StorageService::Instance().getCacheLastOpenedFiles();
-    if(cacheLastOpenedFiles.length()<5) {
-
-        int difference = 5 - cacheLastOpenedFiles.length();
-
-        foreach (MovieMakerFileInfo* fileInfo, currentSavedFiles) {
-            if(difference == 0) break;
-            bool isContains = false;
-            foreach (MovieMakerFileInfo* cacheFile, cacheLastOpenedFiles) {
-                if(cacheFile->path == fileInfo->path){
-                    isContains = true;
-                    break;
-                }
-            }
-            if(isContains) continue;
-            StorageService::Instance().addLastOpenedFile(fileInfo);
-            difference--;
-        }
-
-    }
-    StorageService::Instance().saveLastOpenedFiles();
-
-
+    StorageService::Instance().saveLastOpenedProjects();
     delete ui;
 }
 
@@ -66,8 +35,24 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     player->setSize();
 }
 
-void MainWindow::onProjectFileSelect(QString projectPath){
-    MainWindow::openProject(projectPath);
+void MainWindow::loadLastOpenedFiles(){
+    QList <MovieMakerFileInfo*> lastOpenedFiles = StorageService::Instance().loadLastOpenedFiles();
+    if(lastOpenedFiles.length() != 0){
+        QSignalMapper* signalMapper = new QSignalMapper (this) ;
+        foreach (MovieMakerFileInfo* fileInfo, lastOpenedFiles) {
+            QAction* action = new QAction(fileInfo->path, this);
+            connect(action, SIGNAL(triggered()), signalMapper, SLOT(map()));
+            signalMapper -> setMapping (action, fileInfo->path);
+            connect (signalMapper, SIGNAL(mapped(QString)), this, SLOT(onProjectFileSelect(QString))) ;
+            ui->lastOpenedMenu->addAction(action);
+        }
+    }
+}
+
+
+
+void MainWindow::onProjectFileSelect(QString path){
+   openProject(path);
 }
 
 void MainWindow::on_projectSave_triggered()
@@ -75,6 +60,8 @@ void MainWindow::on_projectSave_triggered()
     QString fileName = QFileDialog::getSaveFileName(this,
             tr(""), "",
             tr("All Files (*)"));
+    if(fileName.isEmpty()) return;
+
     StorageService::Instance().saveProject(fileName);
 
 
@@ -85,6 +72,7 @@ void MainWindow::on_projectOpen_triggered()
     QString fileName = QFileDialog::getOpenFileName(this,
             tr(""), "",
             tr("All Files (*)"));
+    if(fileName.isEmpty()) return;
     MainWindow::openProject(fileName);
 
 

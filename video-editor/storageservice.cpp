@@ -40,6 +40,10 @@ bool StorageService::saveProject(QString projectName)
     return true;
 }
 
+void StorageService::clear(){
+    allProjectFiles.clear();
+}
+
 bool StorageService::saveLastOpenedFiles()
 {
     QString lastOpenedFilesContainerPath = lastOpenedFilesPath;
@@ -90,9 +94,7 @@ QList <MovieMakerFileInfo*> StorageService::loadLastOpenedFiles()
     QByteArray val = readFile.readAll();
     readFile.close();
     QJsonObject object = QJsonDocument::fromJson(val).object();
-    allProjectFiles.clear();
-    allProjectFiles = read(object);
-    return allProjectFiles;
+    return read(object);
 }
 
 QList <MovieMakerFileInfo*> StorageService::getCacheLastOpenedFiles(){
@@ -126,4 +128,29 @@ QList <MovieMakerFileInfo*> StorageService::read(QJsonObject &jsonObj)
         allFiles.append(info);
     }
     return allFiles;
+}
+
+void StorageService::saveLastOpenedProjects(){
+    QList <MovieMakerFileInfo*> currentSavedFiles = loadLastOpenedFiles();
+    QList <MovieMakerFileInfo*> cacheLastOpenedFiles = getCacheLastOpenedFiles();
+    if(cacheLastOpenedFiles.length()<5) {
+
+        int difference = 5 - cacheLastOpenedFiles.length();
+
+        foreach (MovieMakerFileInfo* fileInfo, currentSavedFiles) {
+            if(difference == 0) break;
+            bool isContains = false;
+            foreach (MovieMakerFileInfo* cacheFile, cacheLastOpenedFiles) {
+                if(cacheFile->path == fileInfo->path){
+                    isContains = true;
+                    break;
+                }
+            }
+            if(isContains) continue;
+            addLastOpenedFile(fileInfo);
+            difference--;
+        }
+
+    }
+    saveLastOpenedFiles();
 }

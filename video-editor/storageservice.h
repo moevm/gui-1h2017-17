@@ -34,6 +34,10 @@ public:
     void write(QJsonObject &jsonObj, QList <MovieMakerFileInfo*> fileInfos);
     QList <MovieMakerFileInfo*> read(QJsonObject &jsonObj);
 
+    void saveLastOpenedProjects();
+
+    void clear();
+
 
 private:
     QString lastOpenedFilesPath = "../lastOpened";
