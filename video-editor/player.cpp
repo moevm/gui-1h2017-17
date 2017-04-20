@@ -28,9 +28,9 @@ void Player::setSize(){
     ui->mediaPlayer->setGeometry(0,0,this->width(),this->width()/5*3);
 }
 
-void Player::playSelectedItem(QUrl item)
+void Player::playSelectedItem(QString item)
 {
-    mediaPlayer->setMedia(item);
+    mediaPlayer->setMedia(QUrl(item));
     mediaPlayer->play();
 }
 

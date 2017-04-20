@@ -19,7 +19,7 @@ public:
     void setSize();
 
 public slots:
-    void playSelectedItem(QUrl);
+    void playSelectedItem(QString);
 
 private slots:
     void on_play_clicked();

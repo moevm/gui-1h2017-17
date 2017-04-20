@@ -8,6 +8,7 @@
 #include "player.h"
 #include "QtDebug"
 #include "QSignalMapper"
+#include "storageservice.h"
 
 namespace Ui {
 class MainWindow;

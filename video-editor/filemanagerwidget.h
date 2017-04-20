@@ -6,6 +6,8 @@
 #include <QStringList>
 #include <QKeyEvent>
 
+#include "storageservice.h"
+
 namespace Ui {
 class FileManagerWidget;
 }
@@ -36,15 +38,11 @@ private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
 
 signals:
-    void itemWasClicked(QUrl);
+    void itemWasClicked(QString);
 
 private:
     Ui::FileManagerWidget *ui;
-
-
-
     QStandardItemModel* filesModel;
-
     QString homeDir;
 
     void setIcons();

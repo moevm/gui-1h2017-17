@@ -1,6 +1,5 @@
 #include "filemanagerwidget.h"
 #include "ui_filemanagerwidget.h"
-#include "storageservice.h"
 #include <QFileDialog>
 #include <QTableWidgetItem>
 
@@ -135,5 +134,10 @@ void FileManagerWidget::clearAll()
 {
     QStandardItemModel* model = (QStandardItemModel*)ui->tableView->model();
     model->clear();
+}
+
+void FileManagerWidget::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    emit itemWasClicked(StorageService::Instance().at(index.row())->path);
 }
 

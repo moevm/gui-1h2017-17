@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     fileManager = new FileManagerWidget(ui->centralWidget);
     setCentralWidget(fileManager);
     player = ui->player_w;
-    QObject::connect(fileManager, SIGNAL(itemWasClicked(QUrl)), player, SLOT(playSelectedItem(QUrl)));
+    QObject::connect(fileManager, SIGNAL(itemWasClicked(QString)), player, SLOT(playSelectedItem(QString)));
 
     loadLastOpenedFiles();
 }
