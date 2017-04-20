@@ -93,6 +93,7 @@ void MainWindow::openProject(QString fileName){
 
     MovieMakerFileInfo* fileInfo = new MovieMakerFileInfo;
     fileInfo->path = fileName;
+    //написал комментик для коммита с господом
     StorageService::Instance().clear();
     StorageService::Instance().addLastOpenedFile(fileInfo);
 }
