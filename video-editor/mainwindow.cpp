@@ -37,6 +37,7 @@ void MainWindow::resizeEvent(QResizeEvent *event){
 
 void MainWindow::loadLastOpenedFiles(){
     QList <MovieMakerFileInfo*> lastOpenedFiles = StorageService::Instance().loadLastOpenedFiles();
+    ui->lastOpenedMenu->clear();
     if(lastOpenedFiles.length() != 0){
         QSignalMapper* signalMapper = new QSignalMapper (this) ;
         foreach (MovieMakerFileInfo* fileInfo, lastOpenedFiles) {
@@ -61,7 +62,11 @@ void MainWindow::on_projectSave_triggered()
             tr(""), "",
             tr("All Files (*)"));
     if(fileName.isEmpty()) return;
-
+    MovieMakerFileInfo* file = new MovieMakerFileInfo;
+    file->path = fileName;
+    StorageService::Instance().addLastOpenedFile(file);
+    StorageService::Instance().saveLastOpenedProjects();
+    loadLastOpenedFiles();
     StorageService::Instance().saveProject(fileName);
 
 
@@ -88,6 +93,7 @@ void MainWindow::openProject(QString fileName){
 
     MovieMakerFileInfo* fileInfo = new MovieMakerFileInfo;
     fileInfo->path = fileName;
+    StorageService::Instance().clear();
     StorageService::Instance().addLastOpenedFile(fileInfo);
 }
 

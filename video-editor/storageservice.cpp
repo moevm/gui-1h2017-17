@@ -14,19 +14,17 @@ void StorageService::addProjectFileInfo(MovieMakerFileInfo* fileInfo){
 }
 
 void StorageService::addLastOpenedFile(MovieMakerFileInfo* fileInfo){
+    if(lastOpenedFiles.length() > 5){
+        lastOpenedFiles.dequeue();
+    }
     bool isContains = false;
     foreach (MovieMakerFileInfo* file, lastOpenedFiles) {
         if(file->path == fileInfo->path){
-        isContains = true;
-        break;
+            isContains = true;
+            break;
         }
     }
-    if (!isContains){
-        if(lastOpenedFiles.length() > 5){
-            lastOpenedFiles.dequeue();
-        }
-        lastOpenedFiles.enqueue( fileInfo);
-    }
+    if(!isContains)lastOpenedFiles.enqueue( fileInfo);
 }
 
 bool StorageService::saveProject(QString projectName)
