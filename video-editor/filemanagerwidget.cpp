@@ -112,8 +112,6 @@ void FileManagerWidget::addItem(QString filePath, QString imagePath)
     ui->tableView->setColumnWidth(0,40);
 }
 
-
-
 void FileManagerWidget::changeSize()
 {
     ui->tableView->setGeometry(10,60, this->size().width()-20, this->size().height()-70);
@@ -126,7 +124,7 @@ void FileManagerWidget::deleteItem()
     for(int i = size-1; i >= 0;i--){
         int numb = ui->tableView->selectionModel()->selectedRows().at(i).row();
         filesModel->removeRow(numb);
-        //StorageService::Instance().allFiles.removeAt();
+        StorageService::Instance().removeAt(numb);
     }
 }
 

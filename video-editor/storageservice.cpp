@@ -55,6 +55,11 @@ MovieMakerFileInfo* StorageService::at(int index)
     return allProjectFiles.at(index);
 }
 
+void StorageService::removeAt(int position)
+{
+    allProjectFiles.removeAt(position);
+}
+
 bool StorageService::saveLastOpenedFiles()
 {
     QString lastOpenedFilesContainerPath = lastOpenedFilesPath;

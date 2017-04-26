@@ -39,6 +39,7 @@ public:
     void clear();
 
     MovieMakerFileInfo* at(int position);
+    void removeAt(int position);
 
 private:
     QString lastOpenedFilesPath = "../lastOpened";
