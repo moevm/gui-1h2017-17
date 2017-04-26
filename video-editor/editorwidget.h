@@ -15,7 +15,7 @@ public:
     explicit EditorWidget(QWidget *parent = 0);
     ~EditorWidget();
 
-    //void changeSize();
+    void changeSize();
 
 private:
     Ui::EditorWidget *ui;

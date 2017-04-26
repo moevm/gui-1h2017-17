@@ -9,6 +9,7 @@
 #include "QtDebug"
 #include "QSignalMapper"
 #include "storageservice.h"
+#include "editorwidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -35,14 +36,13 @@ private slots:
 
     void on_projectOpen_triggered();
 
-    //void on_lastOpened_hovered();
-
     void onProjectFileSelect(QString path);
 
 private:
     Ui::MainWindow *ui;
     FileManagerWidget *fileManager;
     Player* player;
+    EditorWidget* editor;
 
     void openProject(QString fileName);
     void loadLastOpenedFiles();

@@ -15,9 +15,9 @@ EditorWidget::~EditorWidget()
     delete ui;
 }
 
-//void EditorWidget::changeSize()
-//{
-//    int w = this->width() - 80;
-//    int h = this->height() - 20;
-//    ui->verticalLayoutWidget->setGeometry(70,10,w,h);
-//}
+void EditorWidget::changeSize()
+{
+    int w = this->geometry().width()-90;
+    int h = 130;
+    ui->verticalLayoutWidget->setGeometry(70,10,w,h);
+}

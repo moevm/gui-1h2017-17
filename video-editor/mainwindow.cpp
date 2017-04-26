@@ -11,7 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
     fileManager = new FileManagerWidget(ui->centralWidget);
     setCentralWidget(fileManager);
     player = ui->player_w;
+    editor = ui->editor_w;
     QObject::connect(fileManager, SIGNAL(itemWasClicked(QString)), player, SLOT(playSelectedItem(QString)));
+
 
     loadLastOpenedFiles();
 }
@@ -29,10 +31,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 }
 
-
 void MainWindow::resizeEvent(QResizeEvent *event){
     this->fileManager->changeSize();
     player->setSize();
+    editor->changeSize();
 }
 
 void MainWindow::loadLastOpenedFiles(){
@@ -49,8 +51,6 @@ void MainWindow::loadLastOpenedFiles(){
         }
     }
 }
-
-
 
 void MainWindow::onProjectFileSelect(QString path){
    openProject(path);
@@ -79,9 +79,6 @@ void MainWindow::on_projectOpen_triggered()
             tr("All Files (*)"));
     if(fileName.isEmpty()) return;
     MainWindow::openProject(fileName);
-
-
-
 }
 
 void MainWindow::openProject(QString fileName){
