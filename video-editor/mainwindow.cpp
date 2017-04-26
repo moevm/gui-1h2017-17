@@ -87,14 +87,14 @@ void MainWindow::on_projectOpen_triggered()
 void MainWindow::openProject(QString fileName){
     fileManager->clearAll();
     QList <MovieMakerFileInfo*> files = StorageService::Instance().loadProject(fileName);
+    StorageService::Instance().clear();
     foreach (MovieMakerFileInfo* fileInfo, files) {
         fileManager->addItem(fileInfo->path,fileInfo->imagePath);
     }
 
     MovieMakerFileInfo* fileInfo = new MovieMakerFileInfo;
     fileInfo->path = fileName;
-    //написал комментик для коммита с господом
-    StorageService::Instance().clear();
+
     StorageService::Instance().addLastOpenedFile(fileInfo);
 }
 
