@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "storageservice.h"
 #include <QSignalMapper>
-
+#include <QTimer>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     editor = ui->editor_w;
     QObject::connect(fileManager, SIGNAL(itemWasClicked(QString)), player, SLOT(playSelectedItem(QString)));
 
+    QTimer *timer = new QTimer(this);
+         connect(timer, SIGNAL(timeout()), player, SLOT(updateTime()));
+         timer->start(1000);
 
     loadLastOpenedFiles();
 }
@@ -33,7 +36,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::resizeEvent(QResizeEvent *event){
     this->fileManager->changeSize();
-    player->setSize();
     editor->changeSize();
 }
 
