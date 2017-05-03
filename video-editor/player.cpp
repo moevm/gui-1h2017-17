@@ -14,6 +14,12 @@ Player::Player(QWidget *parent) :
     ui->groupBox_2->setStyleSheet("QGroupBox { border: 0px}");
 
 
+    glass = new Glass();
+
+
+//    QVideoProbe* probe = new QVideoProbe;
+//    connect(probe,SIGNAL(videoFrameProbed(const QVideoFrame&)),this,SLOT(processFrame(const QVideoFrame &)));
+//    probe->setSource(mediaPlayer);
 }
 
 Player::~Player()
@@ -39,6 +45,11 @@ void Player::playSelectedItem(QString item)
 {
     mediaPlayer->setMedia(QUrl(item));
     setPlay();
+    bool k = mediaPlayer->isMetaDataAvailable();
+    bool k1 = mediaPlayer->isMuted();
+    bool k2 = mediaPlayer->isSeekable();
+    qDebug() << k << k1 << k2;
+   // glass->install(ui->mediaPlayer);
 }
 
 void Player::initPlayer(){

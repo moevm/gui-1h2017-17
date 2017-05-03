@@ -5,6 +5,8 @@
 #include <QMediaPlayer>
 #include <qvideosurfaceformat.h>
 
+#include "glass.h"
+
 namespace Ui {
 class Player;
 }
@@ -24,17 +26,15 @@ public slots:
 private slots:
 
     void on_pause_clicked();
-
     void on_stop_clicked();
-
     void on_horizontalSlider_sliderMoved(int position);
-
     void on_trackW_sliderMoved(int position);
 
 
 private:
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;
+    Glass* glass;
     bool play = false;
     void setIcons();
     void initPlayer();
