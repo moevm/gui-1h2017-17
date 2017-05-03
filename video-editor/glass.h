@@ -20,7 +20,8 @@ public:
 
     //поля компонентов стекла
     QLabel* glass;
-    QMovie* defaultMovie;
+    QMovie* movie;
+    QLabel* animationContainer;
 };
 
 #endif // GLASS_H

@@ -2,18 +2,19 @@
 #include "QtDebug"
 #include <QGraphicsBlurEffect>
 
-Glass::Glass(): defaultMovie(0){
+Glass::Glass(): movie(0){
     glass = new QLabel();
-
+    animationContainer = new QLabel();
 // Загрузим анимацию по умолчанию
-    defaultMovie = new QMovie("../gifka.gif", QByteArray());
+    movie = new QMovie("../gifka.gif", QByteArray(), animationContainer);
 }
 
 // Так как мы не задали родителей для компонент стекла, необходимо
 // самостоятельно позаботиться об освобождении памяти
 Glass::~Glass() {
     glass->deleteLater();
-    defaultMovie->deleteLater();
+    movie->deleteLater();
+    animationContainer->deleteLater();
 }
 
 // Теперь реализуем один из самых важных методов. Установку стекла поверх
@@ -21,31 +22,56 @@ Glass::~Glass() {
 void Glass::install(QWidget* widget) {
 // Для начала удалим его с предыдущего виджета
     remove();
-    //для коммита
 
 // Установим стекло поверх виджета
     glass->setParent(widget);
+    animationContainer->setParent(glass);
 
-    QGraphicsBlurEffect * dse = new QGraphicsBlurEffect();
+    /*QGraphicsBlurEffect * dse = new QGraphicsBlurEffect();
     dse->setBlurRadius(10);
-    glass->setGraphicsEffect(dse);
+    glass->setGraphicsEffect(dse);*/
 
-    glass->setMovie(defaultMovie);
-    defaultMovie->start();
+    glass->setMovie(movie);
+//    QPalette palette;
+//    palette.setColor( QPalette::Background,Qt::red);
+//    animationContainer->setPalette(palette);
+//    animationContainer->setAutoFillBackground(true);
 
+
+    glass->resize(glass->parentWidget()->width(), glass->parentWidget()->height());
+    qDebug() << glass->width() <<glass->height();
+    qDebug() << glass->parentWidget()->width()<< glass->parentWidget()->height();
+    int glassWidth = glass->width();
+    int glassHeight = glass->height();
+    int movieWidth = movie->scaledSize().width();
+    int movieHeight = movie->scaledSize().height();
+    double k = movieHeight/movieWidth;
+
+    if (glassWidth < glassHeight){
+        movieWidth = glassWidth;
+        movieHeight = (int) (movieWidth * k);
+    }
+    else{
+        movieHeight = glassHeight;
+        movieWidth = (int) (movieHeight / k);
+    }
+
+    movie->setScaledSize(QSize(movieWidth,movieHeight));
+
+    movie->start();
     glass->show();
+    animationContainer->show();
 }
 
-// Удаление виджета противоположно установке
 void Glass::remove() {
 // Если стекло было установлено, то удаляем его
     if (glass->parentWidget() != 0) {
-// Перестаем отлавливать события на низлежащем виджете
-        glass->parentWidget()->removeEventFilter(this);
 
 // Скрываем все компоненты стекла
         glass->hide();
         glass->setParent(0);
+        animationContainer->hide();
+        animationContainer->setParent(0);
     }
 }
 

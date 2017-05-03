@@ -10,7 +10,7 @@ FileManagerWidget::FileManagerWidget(QWidget *parent) :
     ui(new Ui::FileManagerWidget)
 {
     ui->setupUi(this);
-    homeDir = "../../../!Musik/Depeche Mode";
+    homeDir = "../../..";
 
     StorageService::Instance();
 

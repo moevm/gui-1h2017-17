@@ -43,12 +43,21 @@ void Player::setIcons()
 
 void Player::playSelectedItem(QString item)
 {
+    QString res = item.right(3);
     mediaPlayer->setMedia(QUrl(item));
-    setPlay();
-    bool k = mediaPlayer->isMetaDataAvailable();
-    bool k1 = mediaPlayer->isMuted();
-    bool k2 = mediaPlayer->isSeekable();
-    qDebug() << k << k1 << k2;
+    if ((res == "jpg") || (res == "peg") ||
+            (res == "jpe") || (res == "fif") ||
+            (res == "png") || (res == "bmp") ||
+            (res == "dib") || (res == "tif") ||
+            (res == "iff") || (res == "wmf") ||
+            (res == "emf") || (res == "gif")){
+        glass->install(ui->mediaPlayer);
+    }
+    else{
+        glass->remove();
+        setPlay();
+    }
+
    // glass->install(ui->mediaPlayer);
 }
 
