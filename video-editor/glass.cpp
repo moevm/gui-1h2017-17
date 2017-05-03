@@ -21,6 +21,7 @@ Glass::~Glass() {
 void Glass::install(QWidget* widget) {
 // Для начала удалим его с предыдущего виджета
     remove();
+    //для коммита
 
 // Установим стекло поверх виджета
     glass->setParent(widget);
