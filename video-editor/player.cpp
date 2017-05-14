@@ -13,13 +13,8 @@ Player::Player(QWidget *parent) :
     ui->verticalGroupBox->setStyleSheet("QGroupBox { border: 0px}");
     ui->groupBox_2->setStyleSheet("QGroupBox { border: 0px}");
 
-
+    k = 0;
     glass = new Glass();
-
-
-//    QVideoProbe* probe = new QVideoProbe;
-//    connect(probe,SIGNAL(videoFrameProbed(const QVideoFrame&)),this,SLOT(processFrame(const QVideoFrame &)));
-//    probe->setSource(mediaPlayer);
 }
 
 Player::~Player()
@@ -64,6 +59,15 @@ void Player::playSelectedItem(QString item)
 void Player::initPlayer(){
     mediaPlayer = new QMediaPlayer(0,QMediaPlayer::VideoSurface);
     mediaPlayer->setVideoOutput(ui->mediaPlayer);
+    mediaPlayer->setMedia(QUrl("../../gravity.avi"));
+    mediaPlayer->play();
+
+    grabber = new VideoFrameGrabber(this);
+    player = new QMediaPlayer(this);
+    player->setVideoOutput(grabber);
+    connect(grabber, SIGNAL(frameAvailable(QImage)), this, SLOT(processFrame(QImage)));
+    player->setMedia(QUrl("../../gravity.avi"));
+    player->play();
 }
 
 void Player::on_pause_clicked()
@@ -82,6 +86,9 @@ void Player::setPause(){
     mediaPlayer->pause();
     ui->pause->setToolTip("Воспроизвести");
     this->play = false;
+
+        QVideoFrame frame;
+        grabber->present(frame);
 }
 
 void Player::setPlay(){
@@ -149,5 +156,11 @@ void Player::on_horizontalSlider_sliderMoved(int position)
 void Player::on_trackW_sliderMoved(int position)
 {
     mediaPlayer->setPosition(position);
+}
+
+void Player::processFrame(QImage)
+{
+    qDebug() << "я в процес фрейм" << k;
+    k++;
 }
 
