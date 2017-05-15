@@ -45,6 +45,12 @@ private:
     void setPause();
     void setPlay();
     int k;
+
+    QString playIcon = ":/images/play.png";
+    QString pauseIcon = ":/images/pause.png";
+    QString stopIcon = ":/images/stop.png";
+    QString frameForwardIcon = ":/images/frameForward.png";
+    QString frameBackIcon = ":/images/frameBack.png";
 };
 
 #endif // PLAYER_H

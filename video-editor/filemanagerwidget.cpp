@@ -62,7 +62,9 @@ void FileManagerWidget::setIcons()
     ui->addAudio->setIcon(QIcon(audioImagePath));
     ui->addVideo->setIcon(QIcon(videoImagePath));
     ui->addImage->setIcon(QIcon(pictureImagePath));
-    ui->record->setIcon(QIcon("../record.png"));
+    //кнопка записи с микрофона
+    ui->record->setVisible(false);
+    ui->record->setIcon(QIcon(recordIcon));
 }
 
 void FileManagerWidget::tableViewSettings()

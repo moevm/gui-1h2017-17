@@ -50,3 +50,10 @@ FORMS    += mainwindow.ui \
     editorwidget.ui
 
 DISTFILES +=
+
+RESOURCES += \
+    images.qrc
+
+#RC_FILE = resources.rc\
+
+

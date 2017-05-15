@@ -25,14 +25,17 @@ Player::~Player()
 
 void Player::setIcons()
 {
-    ui->pause->setIcon(QIcon("../play.png"));
-    ui->stop->setIcon(QIcon("../stop.png"));
-    ui->frameForward->setIcon(QIcon("../frameForward.png"));
-    ui->frameBack->setIcon(QIcon("../frameBack.png"));
+    ui->pause->setIcon(QIcon(playIcon));
+    ui->stop->setIcon(QIcon(stopIcon));
+    ui->frameForward->setIcon(QIcon(frameForwardIcon));
+    ui->frameBack->setIcon(QIcon(frameBackIcon));
     ui->pause->setToolTip("Воспроизвести");
     ui->stop->setToolTip("Остановить");
     ui->frameForward->setToolTip("Следующий кадр");
     ui->frameBack->setToolTip("Предыдущий кадр");
+    //скроем кнопки для раскадровки
+    ui->frameForward->setVisible(false);
+    ui->frameBack->setVisible(true);
 
 }
 
@@ -46,21 +49,19 @@ void Player::playSelectedItem(QString item)
             (res == "dib") || (res == "tif") ||
             (res == "iff") || (res == "wmf") ||
             (res == "emf") || (res == "gif")){
-        glass->install(ui->mediaPlayer);
+        glass->install(ui->mediaPlayer, item);
     }
     else{
         glass->remove();
         setPlay();
     }
-
-   // glass->install(ui->mediaPlayer);
 }
 
 void Player::initPlayer(){
     mediaPlayer = new QMediaPlayer(0,QMediaPlayer::VideoSurface);
     mediaPlayer->setVideoOutput(ui->mediaPlayer);
-    mediaPlayer->setMedia(QUrl("../../gravity.avi"));
-    mediaPlayer->play();
+    //mediaPlayer->setMedia(QUrl("../../gravity.avi"));
+    //mediaPlayer->play();
 
     grabber = new VideoFrameGrabber(this);
     player = new QMediaPlayer(this);
@@ -79,20 +80,20 @@ void Player::on_pause_clicked()
     else{
         setPause();
     }
+    QVideoFrame frame = QVideoFrame();
+    grabber->present(frame);
 }
 
 void Player::setPause(){
-    ui->pause->setIcon(QIcon("../play.png"));
+    ui->pause->setIcon(QIcon(playIcon));
     mediaPlayer->pause();
     ui->pause->setToolTip("Воспроизвести");
     this->play = false;
 
-        QVideoFrame frame;
-        grabber->present(frame);
 }
 
 void Player::setPlay(){
-    ui->pause->setIcon(QIcon("../pause.png"));
+    ui->pause->setIcon(QIcon(pauseIcon));
     mediaPlayer->play();
     ui->pause->setToolTip("Приостановить");
     this->play = true;

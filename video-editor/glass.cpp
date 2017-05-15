@@ -6,7 +6,6 @@ Glass::Glass(): movie(0){
     glass = new QLabel();
     animationContainer = new QLabel();
 // Загрузим анимацию по умолчанию
-    movie = new QMovie("../gifka.gif", QByteArray(), animationContainer);
 }
 
 // Так как мы не задали родителей для компонент стекла, необходимо
@@ -19,24 +18,20 @@ Glass::~Glass() {
 
 // Теперь реализуем один из самых важных методов. Установку стекла поверх
 // виджета
-void Glass::install(QWidget* widget) {
+void Glass::install(QWidget* widget, QString url) {
 // Для начала удалим его с предыдущего виджета
     remove();
 
 // Установим стекло поверх виджета
     glass->setParent(widget);
     animationContainer->setParent(glass);
+    movie = new QMovie(url, QByteArray(), animationContainer);
 
     /*QGraphicsBlurEffect * dse = new QGraphicsBlurEffect();
     dse->setBlurRadius(10);
     glass->setGraphicsEffect(dse);*/
 
     glass->setMovie(movie);
-//    QPalette palette;
-//    palette.setColor( QPalette::Background,Qt::red);
-//    animationContainer->setPalette(palette);
-//    animationContainer->setAutoFillBackground(true);
-
 
     glass->resize(glass->parentWidget()->width(), glass->parentWidget()->height());
     qDebug() << glass->width() <<glass->height();
@@ -56,6 +51,7 @@ void Glass::install(QWidget* widget) {
         movieWidth = (int) (movieHeight / k);
     }
 
+    glass->setAlignment(Qt::AlignCenter);
     movie->setScaledSize(QSize(movieWidth,movieHeight));
 
     movie->start();
@@ -74,4 +70,3 @@ void Glass::remove() {
         animationContainer->setParent(0);
     }
 }
-

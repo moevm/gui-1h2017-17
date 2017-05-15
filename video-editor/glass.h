@@ -14,7 +14,7 @@ public:
     virtual ~Glass();
 
     //установка и снятие эффекта
-    virtual void install(QWidget* widget);
+    virtual void install(QWidget* widget, QString url);
     virtual void remove();
     void setMovie(QMovie* movie);
 
