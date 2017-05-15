@@ -62,7 +62,7 @@ void StorageService::removeAt(int position)
 
 bool StorageService::saveLastOpenedFiles()
 {
-    QString lastOpenedFilesContainerPath = lastOpenedFilesPath;
+    QString lastOpenedFilesContainerPath = lastOpenedFilesPath();
     QFile saveFile(lastOpenedFilesContainerPath);
 
     if (!saveFile.open(QIODevice::ReadWrite)) {
@@ -100,7 +100,7 @@ QList <MovieMakerFileInfo*> StorageService::loadProject(QString projectName)
 QList <MovieMakerFileInfo*> StorageService::loadLastOpenedFiles()
 {
 
-    QFile readFile(lastOpenedFilesPath);
+    QFile readFile(lastOpenedFilesPath());
 
     if (!readFile.open(QIODevice::ReadWrite)) {
         qWarning("Доступ к файлу заблокирован.");

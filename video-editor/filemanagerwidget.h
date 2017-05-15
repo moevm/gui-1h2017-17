@@ -24,11 +24,9 @@ public:
     void addItem(QString filePath, QString imagePath);
     void deleteItem();
     void clearAll();
-
-    QString audioImagePath = ":/images/addAudio.png";
-    QString pictureImagePath = ":/images/addImage.png";
-    QString videoImagePath = ":/images/addVideo.png";
-    QString recordIcon = ":/images/record.png";
+    static QString audioImagePath(){return  "../addAudio.png";}
+    static QString pictureImagePath(){ return "../addImage.png";}
+    static QString videoImagePath(){return "../addVideo.png";}
 
 private slots:
 

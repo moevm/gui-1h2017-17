@@ -25,10 +25,10 @@ Player::~Player()
 
 void Player::setIcons()
 {
-    ui->pause->setIcon(QIcon(playIcon));
-    ui->stop->setIcon(QIcon(stopIcon));
-    ui->frameForward->setIcon(QIcon(frameForwardIcon));
-    ui->frameBack->setIcon(QIcon(frameBackIcon));
+    ui->pause->setIcon(QIcon(playIcon()));
+    ui->stop->setIcon(QIcon(stopIcon()));
+    ui->frameForward->setIcon(QIcon(frameForwardIcon()));
+    ui->frameBack->setIcon(QIcon(frameBackIcon()));
     ui->pause->setToolTip("Воспроизвести");
     ui->stop->setToolTip("Остановить");
     ui->frameForward->setToolTip("Следующий кадр");
@@ -85,7 +85,7 @@ void Player::on_pause_clicked()
 }
 
 void Player::setPause(){
-    ui->pause->setIcon(QIcon(playIcon));
+    ui->pause->setIcon(QIcon(playIcon()));
     mediaPlayer->pause();
     ui->pause->setToolTip("Воспроизвести");
     this->play = false;
@@ -93,7 +93,7 @@ void Player::setPause(){
 }
 
 void Player::setPlay(){
-    ui->pause->setIcon(QIcon(pauseIcon));
+    ui->pause->setIcon(QIcon(pauseIcon()));
     mediaPlayer->play();
     ui->pause->setToolTip("Приостановить");
     this->play = true;

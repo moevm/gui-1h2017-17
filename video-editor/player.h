@@ -39,18 +39,19 @@ private:
     QMediaPlayer* player;
     VideoFrameGrabber* grabber;
     Glass* glass;
-    bool play = false;
+    bool play;
+    
     void setIcons();
     void initPlayer();
     void setPause();
     void setPlay();
     int k;
 
-    QString playIcon = ":/images/play.png";
-    QString pauseIcon = ":/images/pause.png";
-    QString stopIcon = ":/images/stop.png";
-    QString frameForwardIcon = ":/images/frameForward.png";
-    QString frameBackIcon = ":/images/frameBack.png";
+    static QString playIcon() {return ":/images/play.png"; }
+    static QString pauseIcon() {return ":/images/pause.png";}
+    static QString stopIcon() {return ":/images/stop.png";}
+    static QString frameForwardIcon() {return ":/images/frameForward.png";}
+    static QString frameBackIcon(){return ":/images/frameBack.png";}
 };
 
 #endif // PLAYER_H
