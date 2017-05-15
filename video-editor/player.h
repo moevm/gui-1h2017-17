@@ -35,7 +35,7 @@ private slots:
 private:
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;
-    bool play = false;
+    bool play;
     void setIcons();
     void initPlayer();
     void setPause();

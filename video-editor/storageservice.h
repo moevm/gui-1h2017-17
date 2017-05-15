@@ -42,7 +42,7 @@ public:
     void removeAt(int position);
 
 private:
-    QString lastOpenedFilesPath = "../lastOpened";
+    static QString lastOpenedFilesPath() {return "../lastOpened";}
 
     StorageService();
     QList <MovieMakerFileInfo*> allProjectFiles;

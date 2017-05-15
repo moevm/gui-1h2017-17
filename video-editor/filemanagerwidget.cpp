@@ -32,7 +32,7 @@ void FileManagerWidget::on_addAudio_clicked()
                             homeDir,
                             "Аудиофайлы (*.mp3 *.m4a *.wav *.aif *.aifc *.aiff *.snd *.au *.mpa *.mp2 *.wma *.asf)");
 
-    addItems(files, audioImagePath);
+    addItems(files, audioImagePath());
 }
 
 void FileManagerWidget::on_addVideo_clicked()
@@ -43,7 +43,7 @@ void FileManagerWidget::on_addVideo_clicked()
                             homeDir,
                             "Видео (*.avi *.mpg *.m1v *.mp2 *.mp2v *.mpeg *.mpe *.mpv2 *.wm *wmv *.asf)");
 
-    addItems(files, videoImagePath);
+    addItems(files, videoImagePath());
 }
 
 void FileManagerWidget::on_addImage_clicked()
@@ -54,14 +54,14 @@ void FileManagerWidget::on_addImage_clicked()
                             homeDir,
                             "Изображения (*.jpg *.jpeg *.jpe *.jfif *.gif *.png *.bmp *.dib *.tif *.tiff *.wmf *.emf)");
 
-    addItems(files, pictureImagePath);
+    addItems(files, pictureImagePath());
 }
 
 void FileManagerWidget::setIcons()
 {
-    ui->addAudio->setIcon(QIcon(audioImagePath));
-    ui->addVideo->setIcon(QIcon(videoImagePath));
-    ui->addImage->setIcon(QIcon(pictureImagePath));
+    ui->addAudio->setIcon(QIcon(audioImagePath()));
+    ui->addVideo->setIcon(QIcon(videoImagePath()));
+    ui->addImage->setIcon(QIcon(pictureImagePath()));
     ui->record->setIcon(QIcon("../record.png"));
 }
 
