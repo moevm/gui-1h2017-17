@@ -63,10 +63,8 @@ void Player::initPlayer(){
     //mediaPlayer->setMedia(QUrl("../../gravity.avi"));
     //mediaPlayer->play();
 
-    grabber = new VideoFrameGrabber(this);
     player = new QMediaPlayer(this);
     player->setVideoOutput(grabber);
-    connect(grabber, SIGNAL(frameAvailable(QImage)), this, SLOT(processFrame(QImage)));
     player->setMedia(QUrl("../../gravity.avi"));
     player->play();
 }
@@ -81,7 +79,6 @@ void Player::on_pause_clicked()
         setPause();
     }
     QVideoFrame frame = QVideoFrame();
-    grabber->present(frame);
 }
 
 void Player::setPause(){

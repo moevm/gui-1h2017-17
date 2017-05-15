@@ -37,7 +37,7 @@ private:
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;
     QMediaPlayer* player;
-    VideoFrameGrabber* grabber;
+    myQAbstractVideoSurface* grabber;
     Glass* glass;
     bool play;
     
