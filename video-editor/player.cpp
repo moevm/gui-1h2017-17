@@ -1,6 +1,7 @@
 #include "player.h"
 #include "ui_player.h"
 #include "QtDebug"
+#include <QTime>
 
 Player::Player(QWidget *parent) :
     QWidget(parent),
@@ -9,6 +10,7 @@ Player::Player(QWidget *parent) :
     ui->setupUi(this);
     setIcons();
     initPlayer();
+    isItem = true;
 
     ui->verticalGroupBox->setStyleSheet("QGroupBox { border: 0px}");
     ui->groupBox_2->setStyleSheet("QGroupBox { border: 0px}");
@@ -23,6 +25,8 @@ Player::~Player()
 {
     delete ui;
     delete mediaPlayer;
+    delete glass;
+    delete playlist;
 }
 
 void Player::setIcons()
@@ -43,7 +47,7 @@ void Player::setIcons()
 
 void Player::playSelectedItem(QString item)
 {
-    wasPlayed = false;
+    isItem = true;
     QString res = item.right(3);
     curItem.url = item;
     mediaPlayer->setMedia(QUrl(item));
@@ -98,53 +102,61 @@ void Player::on_stop_clicked()
 }
 
 void Player::updateTime(){
-    ui->trackW->setMaximum(curItem.end);
-    ui->trackW->setMinimum(curItem.begin);
-    if (mediaPlayer->position() <= curItem.end){
-        ui->trackW->setValue(mediaPlayer->position());
-        int t1 = (mediaPlayer->position())/3600000;
-        int t = t1 % 100;
-        if (t == 0){
-            ui->hh->setText("00");
+    qint64 position = 0;
+    if (isItem){
+        ui->trackW->setMaximum(curItem.end);
+        ui->trackW->setMinimum(curItem.begin);
+        if (mediaPlayer->position() <= curItem.end){
+            qint64 position = mediaPlayer->position();
+
+            int seconds = (position/1000) % 60;
+            int minutes = (position/60000) % 60;
+            int hours = (position/3600000) % 24;
+
+            QTime time(hours, minutes,seconds);
+
+            ui->time->setText(time.toString());
+            ui->trackW->setValue(mediaPlayer->position());
         }
-        else {
-            if ((t <= 9) && (t > 0)){
-                ui->hh->setText("0" + QString::number(t));
-            }
-            else{
-                ui->hh->setText(QString::number(t));
-            }
-        }
-        t1 = (mediaPlayer->position())/60000;
-        t = t1 % 60;
-        if (t == 0){
-            ui->mm->setText("00");
-        }
-        else {
-            if ((t <= 9) && (t > 0)){
-                ui->mm->setText("0" + QString::number(t));
-            }
-            else{
-                ui->mm->setText(QString::number(t));
-            }
-        }
-        t1 = (mediaPlayer->position())/1000;
-        t = t1 % 60;
-        if (t == 0){
-            ui->ss->setText("00");
-        }
-        else {
-            if ((t <= 9) && (t > 0)){
-                ui->ss->setText("0" + QString::number(t));
-            }
-            else{
-                ui->ss->setText(QString::number(t));
-            }
+        else{
+            on_stop_clicked();
         }
     }
     else{
-        on_stop_clicked();
+        ui->trackW->setMaximum(length);
+        ui->trackW->setMinimum(0);
+        ui->trackW->setValue(position);
+
+        int seconds = (position/1000) % 60;
+        int minutes = (position/60000) % 60;
+        int hours = (position/3600000) % 24;
+
+        QTime time(hours, minutes,seconds);
+        ui->time->setText(time.toString());
+
+        int curMedia = playlist->currentIndex();
+        if (position > list.at(curMedia).absEnd){
+            if (list.size() -1 == curMedia){
+                on_stop_clicked();
+            }
+            playlist->next();
+            mediaPlayer->setPosition(list.at(curMedia + 1).begin);
+        }
+        position++;
     }
+}
+
+void Player::getPlayList(QList<PlayItem> list1, qint64 l)
+{
+    length = l;
+    list = list1;
+    isItem = false;
+    /*playlist = new QMediaPlaylist(mediaPlayer);
+    /*for (int i = 0; i < list.size() ; i++){
+        qDebug() << "tut" << i;
+        playlist->addMedia(QUrl(list.at(i).url));
+        setPlay();
+    }*/
 }
 
 void Player::on_horizontalSlider_sliderMoved(int position)
@@ -157,33 +169,25 @@ void Player::on_trackW_sliderMoved(int position)
     mediaPlayer->setPosition(position);
 }
 
-void Player::processFrame(QImage)
-{
-    qDebug() << "я в процес фрейм" << k;
-    k++;
-}
-
+//левая граница проигрывания
 void Player::on_cutLeft_clicked()
 {
     ui->trackW->setMinimum(ui->trackW->value());
     mediaPlayer->setPosition(ui->trackW->value());
     curItem.begin = ui->trackW->value();
-    qDebug() << curItem.begin << curItem.end;
-    qDebug() << ui->trackW->minimum() << ui->trackW->maximum();
 }
 
+//правая граница проигрывания
 void Player::on_cutRight_clicked()
 {
     ui->trackW->setMaximum(ui->trackW->value());
     ui->trackW->update();
-    //mediaPlayer->setPosition(curItem.begin);
-    mediaPlayer->setPosition(ui->trackW->value());
+    mediaPlayer->setPosition(curItem.begin);
     curItem.end = ui->trackW->value();
-    qDebug() << curItem.begin << curItem.end;
-    qDebug() << ui->trackW->minimum() << ui->trackW->maximum();
-
 }
 
+
+//определяет длину загруженного трека/видео
 void Player::durationChanged(qint64 dur)
 {
         curItem.begin = 0;
@@ -191,7 +195,9 @@ void Player::durationChanged(qint64 dur)
         qDebug() << curItem.begin << curItem.end;
 }
 
+
+//отправление текущего элемента в editor
 void Player::on_toEditor_clicked()
 {
-
+   emit cutWasClicked(curItem);
 }

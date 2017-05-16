@@ -48,7 +48,6 @@ private:
     void tableViewSettings();
     void addItems(QStringList& , QString);
 
-
 };
 
 #endif // FILEMANAGERWIDGET_H

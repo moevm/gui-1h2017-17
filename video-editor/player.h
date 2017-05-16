@@ -3,16 +3,12 @@
 
 #include <QWidget>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <qvideosurfaceformat.h>
 
 #include "glass.h"
-#include "videoframegrabber.h"
+#include "playitem.h"
 
-struct CurItem{
-    int begin;
-    int end;
-    QString url;
-};
 
 
 namespace Ui {
@@ -28,11 +24,12 @@ public:
     ~Player();
 
 Q_SIGNALS:
-    void cutWasClicked();
+    void cutWasClicked(PlayItem item);
 
 public slots:
     void playSelectedItem(QString);
     void updateTime();
+    void getPlayList(QList <PlayItem>, qint64);
 
 private slots:
 
@@ -40,8 +37,6 @@ private slots:
     void on_stop_clicked();
     void on_horizontalSlider_sliderMoved(int position);
     void on_trackW_sliderMoved(int position);
-
-    void processFrame(QImage);
 
     void on_cutLeft_clicked();
     void on_cutRight_clicked();
@@ -55,11 +50,11 @@ private:
     QMediaPlayer* mediaPlayer;
     Glass* glass;
     bool play; // состояние плеера
-    CurItem curItem; // текущий элемент в плеере
-    bool wasPlayed;
-
-
-
+    PlayItem curItem; // текущий элемент в плеере
+    QMediaPlaylist* playlist;
+    QList <PlayItem> list;
+    bool isItem; //проверка сейчас в плеере единичный элемент (1) или плейлист (0)
+    qint64 length; // длина плейлиста в милисекундах
     
     void setIcons();
     void initPlayer();

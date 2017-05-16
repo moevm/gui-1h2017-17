@@ -31,8 +31,7 @@ SOURCES += main.cpp\
     filemanagerwidget.cpp \
     editorwidget.cpp \
     storageservice.cpp \
-    glass.cpp \
-    videoframegrabber.cpp
+    glass.cpp
 
 HEADERS  += mainwindow.h \
     player.h \
@@ -41,7 +40,7 @@ HEADERS  += mainwindow.h \
     editorwidget.h \
     storageservice.h \
     glass.h \
-    videoframegrabber.h
+    playitem.h
 
 FORMS    += mainwindow.ui \
     player.ui \
