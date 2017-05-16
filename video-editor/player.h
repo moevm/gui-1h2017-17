@@ -8,6 +8,13 @@
 #include "glass.h"
 #include "videoframegrabber.h"
 
+struct CurItem{
+    int begin;
+    int end;
+    QString url;
+};
+
+
 namespace Ui {
 class Player;
 }
@@ -19,6 +26,9 @@ class Player : public QWidget
 public:
     explicit Player(QWidget *parent = 0);
     ~Player();
+
+Q_SIGNALS:
+    void cutWasClicked();
 
 public slots:
     void playSelectedItem(QString);
@@ -33,13 +43,23 @@ private slots:
 
     void processFrame(QImage);
 
+    void on_cutLeft_clicked();
+    void on_cutRight_clicked();
+    void durationChanged(qint64);
+
+    void on_toEditor_clicked();
+
 private:
+
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;
-    QMediaPlayer* player;
-    myQAbstractVideoSurface* grabber;
     Glass* glass;
-    bool play;
+    bool play; // состояние плеера
+    CurItem curItem; // текущий элемент в плеере
+    bool wasPlayed;
+
+
+
     
     void setIcons();
     void initPlayer();
@@ -52,6 +72,7 @@ private:
     static QString stopIcon() {return ":/images/stop.png";}
     static QString frameForwardIcon() {return ":/images/frameForward.png";}
     static QString frameBackIcon(){return ":/images/frameBack.png";}
+
 };
 
 #endif // PLAYER_H

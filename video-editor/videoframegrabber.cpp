@@ -62,6 +62,7 @@ void myQAbstractVideoSurface::fnClearPixmap()
 
 bool myQAbstractVideoSurface::present(const QVideoFrame &frame)
 {
+    qDebug() << "dratuti";
     if (surfaceFormat().pixelFormat() != frame.pixelFormat()
             || surfaceFormat().frameSize() != frame.size()) {
         setError(IncorrectFormatError);

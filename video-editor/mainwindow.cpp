@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setCentralWidget(fileManager);
     player = ui->player_w;
     editor = ui->editor_w;
+    //editor->setParent(this);
     QObject::connect(fileManager, SIGNAL(itemWasClicked(QString)), player, SLOT(playSelectedItem(QString)));
-    QObject::connect(fileManager, SIGNAL(itemWasClicked(QString)), editor, SLOT(onVideoLoadOnTrack(QString)));
 
     QTimer *timer = new QTimer(this);
          connect(timer, SIGNAL(timeout()), player, SLOT(updateTime()));
