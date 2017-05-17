@@ -97,6 +97,7 @@ void Player::setPause(){
 void Player::setPlay(){
     ui->pause->setIcon(QIcon(pauseIcon()));
     if (wasStop){
+        qDebug() << wasStop << isItem;
         if (isItem){
             mediaPlayer->setPosition(curItem.begin);
         }
@@ -117,6 +118,11 @@ void Player::on_stop_clicked()
     mediaPlayer->stop();
     setPause();
     wasStop = true;
+    if (!isItem){
+        playlist->setCurrentIndex(0);
+        position = 0;
+        ui->trackW->setValue(position);
+    }
 }
 
 void Player::updateTime(){
@@ -124,8 +130,6 @@ void Player::updateTime(){
         position = 0;
         ui->trackW->setMaximum(curItem.end);
         ui->trackW->setMinimum(curItem.begin);
-        //qDebug() << "min max" << ui->trackW->minimum() << ui->trackW->maximum();
-        //qDebug() << "position" << mediaPlayer->position() << curItem.end;
         if (mediaPlayer->position() <= curItem.end){
             qint64 position = mediaPlayer->position();
 
@@ -140,40 +144,39 @@ void Player::updateTime(){
         }
         else{
             on_stop_clicked();
-            qDebug() << "stooooop";
         }
     }
     else{
-        if (playlist->currentIndex() >= 0){
-            ui->trackW->setMaximum(length);
-            ui->trackW->setMinimum(0);
-            ui->trackW->setValue(position);
+        if (this->play){
+            if (playlist->currentIndex() >= 0){
+                ui->trackW->setMaximum(length);
+                ui->trackW->setMinimum(0);
+                ui->trackW->setValue(position);
 
-            int seconds = (position/1000) % 60;
-            int minutes = (position/60000) % 60;
-            int hours = (position/3600000) % 24;
+                int seconds = (position/1000) % 60;
+                int minutes = (position/60000) % 60;
+                int hours = (position/3600000) % 24;
 
-            QTime time(hours, minutes,seconds);
-            ui->time->setText(time.toString());
+                QTime time(hours, minutes,seconds);
+                ui->time->setText(time.toString());
 
-            int curMedia = playlist->currentIndex();
+                int curMedia = playlist->currentIndex();
 
-            if (position > (list.at(curMedia).absEnd)){
+                if (position > (list.at(curMedia).absEnd)){
 
-                if (list.size() - 1 == curMedia){
-                    isItem = true;
-                    on_stop_clicked();
+                    if (list.size() - 1 == curMedia){
+                        on_stop_clicked();
+                    }
+                    playlist->next();
+                    if (curMedia + 1 == list.size()){
+                        on_stop_clicked();
+                    }
+                    else{
+                        mediaPlayer->setPosition(list.at(curMedia + 1).begin);
+                    }
                 }
-                playlist->next();
-                if (curMedia + 1 == list.size()){
-                    isItem = true;
-                    on_stop_clicked();
-                }
-                else{
-                    mediaPlayer->setPosition(list.at(curMedia + 1).begin);
-                }
+                position++;
             }
-            position++;
         }
     }
 }
@@ -219,7 +222,6 @@ void Player::on_trackW_sliderMoved(int position)
 void Player::on_cutLeft_clicked()
 {
     ui->trackW->setMinimum(ui->trackW->value());
-    qDebug() << "minimum" << ui->trackW->minimum();
     mediaPlayer->setPosition(ui->trackW->value());
     curItem.begin = ui->trackW->value();
 }
@@ -228,7 +230,6 @@ void Player::on_cutLeft_clicked()
 void Player::on_cutRight_clicked()
 {
     ui->trackW->setMaximum(ui->trackW->value());
-    qDebug() << curItem.begin;
     mediaPlayer->setPosition(curItem.begin);
     curItem.end = ui->trackW->value();
     setPlay();
@@ -240,7 +241,6 @@ void Player::durationChanged(qint64 dur)
 {
         curItem.begin = 0;
         curItem.end = dur;
-        qDebug() << curItem.begin << curItem.end;
 }
 
 
@@ -248,7 +248,6 @@ void Player::durationChanged(qint64 dur)
 void Player::on_toEditor_clicked()
 {   
    if (isExistCurItem){
-       qDebug() << "player" << curItem.begin << curItem.end;
        emit cutWasClicked(curItem);
    }
 }

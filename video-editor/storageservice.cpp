@@ -52,6 +52,7 @@ void StorageService::clear(){
 
 MovieMakerFileInfo* StorageService::at(int index)
 {
+    MovieMakerFileInfo* temp;
     return allProjectFiles.at(index);
 }
 

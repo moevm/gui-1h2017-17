@@ -26,7 +26,6 @@ void EditorWidget::changeSize()
 
 void EditorWidget::addToPlayList(PlayItem item)
 {
-    qDebug() << "editor" << item.begin << item.end;
 
     item.absBegin = length + 1;
     item.absEnd = item.absBegin + item.end - item.begin;
@@ -38,6 +37,9 @@ void EditorWidget::addToPlayList(PlayItem item)
     QPalette pal(palette());
     pal.setColor(QPalette::Background, Qt::gray);
     itemWidget->setPalette(pal);
+    ui->tracklist->setAlignment(Qt::AlignLeft);
+    itemWidget->setMinimumWidth(100);
+    itemWidget->setMaximumWidth(100);
 
     QLabel* name = new QLabel(itemWidget);
     QString str = item.url.right(item.url.length()-item.url.lastIndexOf('/')-1);
@@ -48,13 +50,11 @@ void EditorWidget::addToPlayList(PlayItem item)
         ui->audioTrack->addWidget(itemWidget);
     }
 
-    if(extension == "mp4"){
-         ui->widget->setVisible(false);
+    if(extension == "avi"){
+        ui->widget->setVisible(false);
         ui->tracklist->addWidget(itemWidget);
     }
 
-
-    qDebug() << item.absBegin << item.absEnd << item.begin << item.end;
 }
 
 
