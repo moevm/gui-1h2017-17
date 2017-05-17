@@ -30,14 +30,17 @@ SOURCES += main.cpp\
     effectswidget.cpp \
     filemanagerwidget.cpp \
     editorwidget.cpp \
-    storageservice.cpp
+    storageservice.cpp \
+    glass.cpp
 
 HEADERS  += mainwindow.h \
     player.h \
     effectswidget.h \
     filemanagerwidget.h \
     editorwidget.h \
-    storageservice.h
+    storageservice.h \
+    glass.h \
+    playitem.h
 
 FORMS    += mainwindow.ui \
     player.ui \
@@ -46,3 +49,10 @@ FORMS    += mainwindow.ui \
     editorwidget.ui
 
 DISTFILES +=
+
+RESOURCES += \
+    images.qrc
+
+#RC_FILE = resources.rc\
+
+

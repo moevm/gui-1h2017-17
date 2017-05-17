@@ -8,11 +8,13 @@ EditorWidget::EditorWidget(QWidget *parent) :
     ui(new Ui::EditorWidget)
 {
     ui->setupUi(this);
+    length = 0;
+    ui->pushButton->setIcon(QIcon(this->playIcon()));
 }
 
 EditorWidget::~EditorWidget()
 {
-    delete ui;
+    delete ui;//коментик
 }
 
 void EditorWidget::changeSize()

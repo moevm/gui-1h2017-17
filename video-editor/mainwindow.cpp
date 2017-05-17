@@ -13,10 +13,12 @@ MainWindow::MainWindow(QWidget *parent) :
     player = ui->player_w;
     editor = ui->editor_w;
     QObject::connect(fileManager, SIGNAL(itemWasClicked(QString)), player, SLOT(playSelectedItem(QString)));
+    QObject::connect(player,SIGNAL(cutWasClicked(PlayItem)), editor, SLOT(addToPlayList(PlayItem)));
+    QObject::connect(editor, SIGNAL(playUsersList(QList<PlayItem>,qint64)),player, SLOT(getPlayList(QList<PlayItem>, qint64)));
 
     QTimer *timer = new QTimer(this);
          connect(timer, SIGNAL(timeout()), player, SLOT(updateTime()));
-         timer->start(1000);
+         timer->start(1);
 
     loadLastOpenedFiles();
 }

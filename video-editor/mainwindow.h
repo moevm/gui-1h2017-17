@@ -31,11 +31,8 @@ public slots:
 
 private slots:
     void resizeEvent(QResizeEvent*);
-
     void on_projectSave_triggered();
-
     void on_projectOpen_triggered();
-
     void onProjectFileSelect(QString path);
 
 private:

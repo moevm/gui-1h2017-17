@@ -24,10 +24,9 @@ public:
     void addItem(QString filePath, QString imagePath);
     void deleteItem();
     void clearAll();
-
-    static QString audioImagePath(){return  "../addAudio.png";}
-    static QString pictureImagePath(){ return "../addImage.png";}
-    static QString videoImagePath(){return "../addVideo.png";}
+    static QString audioImagePath(){return  ":/images/addAudio.png";}
+    static QString pictureImagePath(){ return ":/images/addImage.png";}
+    static QString videoImagePath(){return ":/images/addVideo.png";}
 
 private slots:
 
@@ -48,7 +47,6 @@ private:
     void setIcons();
     void tableViewSettings();
     void addItems(QStringList& , QString);
-
 
 };
 

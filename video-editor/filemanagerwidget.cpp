@@ -10,7 +10,7 @@ FileManagerWidget::FileManagerWidget(QWidget *parent) :
     ui(new Ui::FileManagerWidget)
 {
     ui->setupUi(this);
-    homeDir = "../../../!Musik/Depeche Mode";
+    homeDir = "../..";
 
     StorageService::Instance();
 
@@ -41,7 +41,7 @@ void FileManagerWidget::on_addVideo_clicked()
                             this,
                             "Выберите видео файлы",
                             homeDir,
-                            "Видео (*.avi *.mpg *.m1v *.mp2 *.mp2v *.mpeg *.mpe *.mpv2 *.wm *wmv *.asf)");
+                            "Видео (*.avi *.mpg *.m1v *.mp2 *.mp2v *.mpeg *.mpe *.mpv2 *.wm *wmv *.asf *.mp4)");
 
     addItems(files, videoImagePath());
 }
@@ -62,6 +62,7 @@ void FileManagerWidget::setIcons()
     ui->addAudio->setIcon(QIcon(audioImagePath()));
     ui->addVideo->setIcon(QIcon(videoImagePath()));
     ui->addImage->setIcon(QIcon(pictureImagePath()));
+    ui->record->setVisible(false);
     ui->record->setIcon(QIcon("../record.png"));
 }
 
