@@ -183,9 +183,21 @@ void Player::updateTime(){
 
 void Player::getPlayList(QList<PlayItem> list1, qint64 l)
 {
+    QList<PlayItem> audiolist = QList<PlayItem>();
+    QList<PlayItem> videolist = QList<PlayItem>();
+    foreach (PlayItem item, list1) {
+        if(item.url.right(3)=="avi"){
+            videolist.append(item);
+        }
+
+        if(item.url.right(3)=="mp3"){
+            audiolist.append(item);
+        }
+    }
+
     isExistCurItem = false;
     length = l;
-    list = list1;
+    list = videolist;
     isItem = false;
     playlist = new QMediaPlaylist(mediaPlayer);
     for (int i = 0; i < list.size() ; i++){
@@ -194,6 +206,17 @@ void Player::getPlayList(QList<PlayItem> list1, qint64 l)
     mediaPlayer->setPlaylist(playlist);
     if (list.size() > 0){
         mediaPlayer->setPosition(list.at(0).begin);
+        setPlay();
+    }
+
+    isItem = false;
+    audioPlayList = new QMediaPlaylist(audioPlayer);
+    for (int i = 0; i < audiolist.size() ; i++){
+        audioPlayList->addMedia(QUrl(audiolist.at(i).url));
+    }
+    audioPlayer->setPlaylist(audioPlayList);
+    if (list.size() > 0){
+        audioPlayer->setPosition(list.at(0).begin);
         setPlay();
     }
 }

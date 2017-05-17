@@ -24,7 +24,7 @@ void StorageService::addLastOpenedFile(MovieMakerFileInfo* fileInfo){
             break;
         }
     }
-    if(!isContains)lastOpenedFiles.enqueue( fileInfo);
+    if(!isContains)lastOpenedFiles.enqueue(fileInfo);
 }
 
 bool StorageService::saveProject(QString projectName)

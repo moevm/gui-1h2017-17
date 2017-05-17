@@ -49,10 +49,13 @@ private:
 
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;
+    QMediaPlayer* audioPlayer;
     Glass* glass;
     bool play; // состояние плеера
     PlayItem curItem; // текущий элемент в плеере
+    PlayItem curAudioItem;
     QMediaPlaylist* playlist;
+    QMediaPlaylist* audioPlayList;
     QList <PlayItem> list;
     bool isItem; //проверка сейчас в плеере единичный элемент (1) или плейлист (0)
     qint64 length; // длина плейлиста в милисекундах
@@ -62,7 +65,7 @@ private:
     void setIcons();
     void initPlayer();
     void setPause();
-    void setPlay();
+    void setPlay(bool isCutted);
     int k;
 
     static QString playIcon() {return ":/images/play.png"; }
