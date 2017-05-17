@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QTimer *timer = new QTimer(this);
          connect(timer, SIGNAL(timeout()), player, SLOT(updateTime()));
-         timer->start(1000);
+         timer->start(1);
 
     loadLastOpenedFiles();
 }

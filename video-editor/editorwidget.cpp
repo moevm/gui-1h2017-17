@@ -25,6 +25,8 @@ void EditorWidget::changeSize()
 
 void EditorWidget::addToPlayList(PlayItem item)
 {
+    qDebug() << "editor" << item.begin << item.end;
+    ui->widget->setVisible(false);
     item.absBegin = length + 1;
     item.absEnd = item.absBegin + item.end - item.begin;
     list.append(item);
@@ -42,9 +44,6 @@ void EditorWidget::addToPlayList(PlayItem item)
 
     ui->tracklist->addWidget(itemWidget);
 
-    QWidget* r = new QWidget();
-    r->setMaximumWidth(1);
-    ui->tracklist->addWidget(r);
     qDebug() << item.absBegin << item.absEnd << item.begin << item.end;
 }
 

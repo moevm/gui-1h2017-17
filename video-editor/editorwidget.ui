@@ -46,7 +46,15 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="tracklist"/>
+     <layout class="QHBoxLayout" name="tracklist">
+      <item>
+       <widget class="QWidget" name="widget" native="true">
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

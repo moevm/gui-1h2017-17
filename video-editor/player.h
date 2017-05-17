@@ -55,6 +55,7 @@ private:
     QList <PlayItem> list;
     bool isItem; //проверка сейчас в плеере единичный элемент (1) или плейлист (0)
     qint64 length; // длина плейлиста в милисекундах
+    qint64 position; // позиция плейлиста
     
     void setIcons();
     void initPlayer();
