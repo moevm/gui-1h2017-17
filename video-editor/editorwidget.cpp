@@ -38,6 +38,7 @@ void EditorWidget::addToPlayList(PlayItem item)
     QPalette pal(palette());
     pal.setColor(QPalette::Background, Qt::gray);
     itemWidget->setPalette(pal);
+    itemWidget->setWidth(100);
 
     QLabel* name = new QLabel(itemWidget);
     QString str = item.url.right(item.url.length()-item.url.lastIndexOf('/')-1);

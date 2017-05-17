@@ -11,6 +11,7 @@ Player::Player(QWidget *parent) :
     setIcons();
     initPlayer();
     isItem = true;
+    isExistCurItem = false;
 
     wasStop = false;
     ui->verticalGroupBox->setStyleSheet("QGroupBox { border: 0px}");
@@ -22,6 +23,7 @@ Player::Player(QWidget *parent) :
     glass = new Glass();
 
     position = 0;
+
 }
 
 Player::~Player()
@@ -50,6 +52,7 @@ void Player::setIcons()
 
 void Player::playSelectedItem(QString item)
 {
+    isExistCurItem = true;
     isItem = true;
     QString res = item.right(3);
     curItem.url = item;
@@ -177,6 +180,7 @@ void Player::updateTime(){
 
 void Player::getPlayList(QList<PlayItem> list1, qint64 l)
 {
+    isExistCurItem = false;
     length = l;
     list = list1;
     isItem = false;
@@ -242,7 +246,9 @@ void Player::durationChanged(qint64 dur)
 
 //отправление текущего элемента в editor
 void Player::on_toEditor_clicked()
-{
-   qDebug() << "player" << curItem.begin << curItem.end;
-   emit cutWasClicked(curItem);
+{   
+   if (isExistCurItem){
+       qDebug() << "player" << curItem.begin << curItem.end;
+       emit cutWasClicked(curItem);
+   }
 }
