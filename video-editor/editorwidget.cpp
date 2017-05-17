@@ -27,7 +27,7 @@ void EditorWidget::changeSize()
 void EditorWidget::addToPlayList(PlayItem item)
 {
     qDebug() << "editor" << item.begin << item.end;
-    ui->widget->setVisible(false);
+
     item.absBegin = length + 1;
     item.absEnd = item.absBegin + item.end - item.begin;
     list.append(item);
@@ -38,17 +38,18 @@ void EditorWidget::addToPlayList(PlayItem item)
     QPalette pal(palette());
     pal.setColor(QPalette::Background, Qt::gray);
     itemWidget->setPalette(pal);
-    itemWidget->setWidth(100);
 
     QLabel* name = new QLabel(itemWidget);
     QString str = item.url.right(item.url.length()-item.url.lastIndexOf('/')-1);
     name->setText(str);
     QString extension = item.url.right(3);
     if(extension == "mp3"){
+        ui->audioTrackWidget->setVisible(false);
         ui->audioTrack->addWidget(itemWidget);
     }
 
     if(extension == "mp4"){
+         ui->widget->setVisible(false);
         ui->tracklist->addWidget(itemWidget);
     }
 
