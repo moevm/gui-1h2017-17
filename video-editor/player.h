@@ -45,6 +45,7 @@ private slots:
     void on_toEditor_clicked();
 
 private:
+    bool isExistCurItem;
 
     Ui::Player *ui;
     QMediaPlayer* mediaPlayer;
