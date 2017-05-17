@@ -14,7 +14,7 @@ EditorWidget::EditorWidget(QWidget *parent) :
 
 EditorWidget::~EditorWidget()
 {
-    delete ui;
+    delete ui;//коментик
 }
 
 void EditorWidget::changeSize()
