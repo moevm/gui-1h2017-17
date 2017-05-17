@@ -41,7 +41,7 @@ void FileManagerWidget::on_addVideo_clicked()
                             this,
                             "Выберите видео файлы",
                             homeDir,
-                            "Видео (*.avi *.mpg *.m1v *.mp2 *.mp2v *.mpeg *.mpe *.mpv2 *.wm *wmv *.asf)");
+                            "Видео (*.avi *.mpg *.m1v *.mp2 *.mp2v *.mpeg *.mpe *.mpv2 *.wm *wmv *.asf *.mp4)");
 
     addItems(files, videoImagePath());
 }

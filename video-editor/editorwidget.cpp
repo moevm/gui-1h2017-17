@@ -42,8 +42,15 @@ void EditorWidget::addToPlayList(PlayItem item)
     QLabel* name = new QLabel(itemWidget);
     QString str = item.url.right(item.url.length()-item.url.lastIndexOf('/')-1);
     name->setText(str);
+    QString extension = item.url.right(3);
+    if(extension == "mp3"){
+        ui->audioTrack->addWidget(itemWidget);
+    }
 
-    ui->tracklist->addWidget(itemWidget);
+    if(extension == "mp4"){
+        ui->tracklist->addWidget(itemWidget);
+    }
+
 
     qDebug() << item.absBegin << item.absEnd << item.begin << item.end;
 }
