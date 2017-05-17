@@ -38,8 +38,9 @@ void EditorWidget::addToPlayList(PlayItem item)
     pal.setColor(QPalette::Background, Qt::gray);
     itemWidget->setPalette(pal);
     ui->tracklist->setAlignment(Qt::AlignLeft);
-    itemWidget->setMinimumWidth(100);
-    itemWidget->setMaximumWidth(100);
+    ui->audioTrack->setAlignment(Qt::AlignLeft);
+    itemWidget->setMinimumWidth((item.end - item.begin)/100);
+    itemWidget->setMaximumWidth((item.end - item.begin)/100);
 
     QLabel* name = new QLabel(itemWidget);
     QString str = item.url.right(item.url.length()-item.url.lastIndexOf('/')-1);
