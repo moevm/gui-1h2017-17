@@ -82,14 +82,14 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>10</y>
-     <width>51</width>
-     <height>23</height>
+     <width>41</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>Play</string>
+    <string/>
    </property>
   </widget>
  </widget>

@@ -32,6 +32,8 @@ private:
     Ui::EditorWidget *ui;
     QList <PlayItem> list;
     qint64 length;
+
+    static QString playIcon() {return ":/images/play.png"; }
 };
 
 #endif // EDITORWIDGET_H

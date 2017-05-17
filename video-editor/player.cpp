@@ -12,6 +12,7 @@ Player::Player(QWidget *parent) :
     initPlayer();
     isItem = true;
 
+    wasStop = false;
     ui->verticalGroupBox->setStyleSheet("QGroupBox { border: 0px}");
     ui->groupBox_2->setStyleSheet("QGroupBox { border: 0px}");
 
@@ -92,16 +93,17 @@ void Player::setPause(){
 
 void Player::setPlay(){
     ui->pause->setIcon(QIcon(pauseIcon()));
-    /*if (isItem){
-        mediaPlayer->setPosition(curItem.begin);
-    }
-    else{
-        if (list.size() > 0){
-            mediaPlayer->setPosition(list.at(0).begin);
-        // ТУТ ПОПРАВИТЬ!!!!
-       // mediaPlayer->setPosition(position);
+    if (wasStop){
+        if (isItem){
+            mediaPlayer->setPosition(curItem.begin);
         }
-    }*/
+        else{
+            if (list.size() > 0){
+                mediaPlayer->setPosition(list.at(0).begin);
+            }
+        }
+        wasStop = false;
+    }
     mediaPlayer->play();
     ui->pause->setToolTip("Приостановить");
     this->play = true;
@@ -111,6 +113,7 @@ void Player::on_stop_clicked()
 {
     mediaPlayer->stop();
     setPause();
+    wasStop = true;
 }
 
 void Player::updateTime(){
@@ -193,10 +196,19 @@ void Player::on_horizontalSlider_sliderMoved(int position)
     mediaPlayer->setVolume(position);
 }
 
-// НЕ ЗАБУДЬ ИСПРАВИТЬ ТУТ!!!!!!!
 void Player::on_trackW_sliderMoved(int position)
 {
-    mediaPlayer->setPosition(position);
+    if (isItem){
+        mediaPlayer->setPosition(position);
+    }
+    else{
+        for (int i = 0; i < list.size(); i++){
+            if (list.at(i).absEnd > position){
+                playlist->setCurrentIndex(i);
+                mediaPlayer->setPosition(position - list.at(i).absBegin);
+            }
+        }
+    }
 }
 
 //левая граница проигрывания

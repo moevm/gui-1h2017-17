@@ -56,6 +56,7 @@ private:
     bool isItem; //проверка сейчас в плеере единичный элемент (1) или плейлист (0)
     qint64 length; // длина плейлиста в милисекундах
     qint64 position; // позиция плейлиста
+    bool wasStop;
     
     void setIcons();
     void initPlayer();

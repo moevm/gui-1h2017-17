@@ -9,6 +9,7 @@ EditorWidget::EditorWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     length = 0;
+    ui->pushButton->setIcon(QIcon(this->playIcon()));
 }
 
 EditorWidget::~EditorWidget()
