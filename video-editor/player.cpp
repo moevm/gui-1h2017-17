@@ -182,8 +182,9 @@ void Player::updateTime(){
 
                 int curMedia = playlist->currentIndex();
                 int curAudio = playlist1->currentIndex();
-
-                if (position > (list.at(curMedia).absEnd)){
+                qDebug() << curMedia << curAudio;
+                if (curMedia >= 0){
+                    if (position > (list.at(curMedia).absEnd)){
                     if (list.size() - 1 == curMedia){
                         if (isMediaLongest){
                             on_stop_clicked();
@@ -207,8 +208,9 @@ void Player::updateTime(){
                         }
                     }
                 }
-
-                if (position > (list1.at(curAudio).absEnd)){
+                }
+                if (curAudio >= 0){
+                    if (position > (list1.at(curAudio).absEnd)){
                     if (list1.size() - 1 == curAudio){
                         if (!isMediaLongest){
                             on_stop_clicked();
@@ -231,6 +233,7 @@ void Player::updateTime(){
                             audioPlayer->setPosition(list1.at(curAudio + 1).begin);
                         }
                     }
+                }
                 }
                 position++;
         }
