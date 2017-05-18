@@ -41,19 +41,16 @@ void EditorWidget::addToPlayList(PlayItem item)
     QString str = item.url.right(item.url.length()-item.url.lastIndexOf('/')-1);
     name->setText(str);
     QString extension = item.url.right(3);
-    qDebug() << "length" << length <<length1;
     if(extension == "mp3"){
         ui->audioTrackWidget->setVisible(false);
         ui->audioTrack->addWidget(itemWidget);
         isMedia = false;
-        qDebug() << "add" << isMedia << length1;
     }
 
     if(extension == "avi"){
         ui->widget->setVisible(false);
         ui->tracklist->addWidget(itemWidget);
         isMedia = true;
-        qDebug() << "add" << isMedia << length;
     }
 
     if (isMedia){
@@ -65,9 +62,7 @@ void EditorWidget::addToPlayList(PlayItem item)
         length1 += (item.end - item.begin);
     }
     item.absEnd = item.absBegin + item.end - item.begin;
-    qDebug() << "add1" << isMedia << item.absBegin << item.absEnd <<item.begin <<item.end;
     list.append(item);
-
 }
 
 
