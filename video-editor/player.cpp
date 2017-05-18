@@ -73,6 +73,7 @@ void Player::playSelectedItem(QString item)
 
 void Player::initPlayer(){
     mediaPlayer = new QMediaPlayer(0,QMediaPlayer::VideoSurface);
+    audioPlayer = new QMediaPlayer();
     mediaPlayer->setVideoOutput(ui->mediaPlayer);
 }
 
@@ -90,6 +91,9 @@ void Player::on_pause_clicked()
 void Player::setPause(){
     ui->pause->setIcon(QIcon(playIcon()));
     mediaPlayer->pause();
+    if ((!isItem) && (list1.size() >0)){
+            audioPlayer->pause();
+    }
     ui->pause->setToolTip("Воспроизвести");
     this->play = false;
 }
@@ -97,32 +101,41 @@ void Player::setPause(){
 void Player::setPlay(){
     ui->pause->setIcon(QIcon(pauseIcon()));
     if (wasStop){
-        qDebug() << wasStop << isItem;
         if (isItem){
             mediaPlayer->setPosition(curItem.begin);
         }
         else{
-            if (list.size() > 0){
+            if (!list.isEmpty()){
                 mediaPlayer->setPosition(list.at(0).begin);
+                if (!list1.isEmpty()){
+                    audioPlayer->setPosition(list1.at(0).begin);
+                }
             }
         }
         wasStop = false;
     }
     mediaPlayer->play();
+    if ((!isItem) && (!list1.isEmpty())){
+            audioPlayer->play();
+    }
     ui->pause->setToolTip("Приостановить");
     this->play = true;
 }
 
 void Player::on_stop_clicked()
 {
-    mediaPlayer->stop();
     setPause();
+    mediaPlayer->stop();
+    audioPlayer->stop();
     wasStop = true;
     if (!isItem){
-        playlist->setCurrentIndex(0);
+        if (!list.isEmpty()) playlist->setCurrentIndex(0);
+        if (!list1.isEmpty()) playlist1->setCurrentIndex(0);
         position = 0;
         ui->trackW->setValue(position);
     }
+    QTime time (0,0,0);
+    ui->time->setText(time.toString());
 }
 
 void Player::updateTime(){
@@ -147,9 +160,16 @@ void Player::updateTime(){
         }
     }
     else{
-        if (this->play){
-            if (playlist->currentIndex() >= 0){
-                ui->trackW->setMaximum(length);
+        if (!wasStop){
+                bool isMediaLongest; // 1 - длиннее видео, 0 - длиннее аудио
+                if (length > length1){
+                    ui->trackW->setMaximum(length);
+                    isMediaLongest = true;
+                }
+                else{
+                    isMediaLongest = false;
+                    ui->trackW->setMaximum(length1);
+                }
                 ui->trackW->setMinimum(0);
                 ui->trackW->setValue(position);
 
@@ -161,62 +181,99 @@ void Player::updateTime(){
                 ui->time->setText(time.toString());
 
                 int curMedia = playlist->currentIndex();
+                int curAudio = playlist1->currentIndex();
 
                 if (position > (list.at(curMedia).absEnd)){
-
                     if (list.size() - 1 == curMedia){
-                        on_stop_clicked();
-                    }
-                    playlist->next();
-                    if (curMedia + 1 == list.size()){
-                        on_stop_clicked();
+                        if (isMediaLongest){
+                            on_stop_clicked();
+                        }
+                        else{
+                            mediaPlayer->stop();
+                        }
                     }
                     else{
-                        mediaPlayer->setPosition(list.at(curMedia + 1).begin);
+                        playlist->next();
+                        if (curMedia + 1 == list.size()){
+                            if (isMediaLongest){
+                                on_stop_clicked();
+                            }
+                            else{
+                                mediaPlayer->stop();
+                            }
+                        }
+                        else{
+                            mediaPlayer->setPosition(list.at(curMedia + 1).begin);
+                        }
+                    }
+                }
+
+                if (position > (list1.at(curAudio).absEnd)){
+                    if (list1.size() - 1 == curAudio){
+                        if (!isMediaLongest){
+                            on_stop_clicked();
+                        }
+                        else{
+                            audioPlayer->stop();
+                        }
+                    }
+                    else{
+                        playlist1->next();
+                        if (curAudio + 1 == list1.size()){
+                            if (!isMediaLongest){
+                                on_stop_clicked();
+                            }
+                            else{
+                                audioPlayer->stop();
+                            }
+                        }
+                        else{
+                            audioPlayer->setPosition(list1.at(curAudio + 1).begin);
+                        }
                     }
                 }
                 position++;
-            }
         }
     }
 }
 
-void Player::getPlayList(QList<PlayItem> list1, qint64 l)
+void Player::getPlayList(QList<PlayItem> list2, qint64 l, qint64 l1)
 {
-    QList<PlayItem> audiolist = QList<PlayItem>();
-    QList<PlayItem> videolist = QList<PlayItem>();
-    foreach (PlayItem item, list1) {
-        if(item.url.right(3)=="avi"){
-            videolist.append(item);
+    if (!list2.isEmpty()){
+        foreach (PlayItem item, list2) {
+            if(item.url.right(3)=="avi"){
+                list.append(item);
+            }
+
+            if(item.url.right(3)=="mp3"){
+                list1.append(item);
+            }
         }
 
-        if(item.url.right(3)=="mp3"){
-            audiolist.append(item);
+        isExistCurItem = false;
+        length = l;
+        length1 = l1;
+        isItem = false;
+        playlist = new QMediaPlaylist(mediaPlayer);
+        playlist1 = new QMediaPlaylist(audioPlayer);
+        if (!list.isEmpty()){
+            for (int i = 0; i < list.size() ; i++){
+                playlist->addMedia(QUrl(list.at(i).url));
+            }
+            mediaPlayer->setPlaylist(playlist);
+            if (list.size() > 0){
+                mediaPlayer->setPosition(list.at(0).begin);
+            }
         }
-    }
-
-    isExistCurItem = false;
-    length = l;
-    list = videolist;
-    isItem = false;
-    playlist = new QMediaPlaylist(mediaPlayer);
-    for (int i = 0; i < list.size() ; i++){
-        playlist->addMedia(QUrl(list.at(i).url));
-    }
-    mediaPlayer->setPlaylist(playlist);
-    if (list.size() > 0){
-        mediaPlayer->setPosition(list.at(0).begin);
-        setPlay();
-    }
-
-    isItem = false;
-    audioPlayList = new QMediaPlaylist(audioPlayer);
-    for (int i = 0; i < audiolist.size() ; i++){
-        audioPlayList->addMedia(QUrl(audiolist.at(i).url));
-    }
-    audioPlayer->setPlaylist(audioPlayList);
-    if (list.size() > 0){
-        audioPlayer->setPosition(list.at(0).begin);
+        if (!list1.isEmpty()){
+            for (int i = 0; i < list1.size() ; i++){
+                playlist1->addMedia(QUrl(list1.at(i).url));
+            }
+            audioPlayer->setPlaylist(playlist1);
+            if (list1.size() > 0){
+                audioPlayer->setPosition(list1.at(0).begin);
+            }
+        }
         setPlay();
     }
 }
@@ -224,6 +281,7 @@ void Player::getPlayList(QList<PlayItem> list1, qint64 l)
 void Player::on_horizontalSlider_sliderMoved(int position)
 {
     mediaPlayer->setVolume(position);
+    audioPlayer->setVolume(position);
 }
 
 void Player::on_trackW_sliderMoved(int position)
@@ -257,7 +315,6 @@ void Player::on_cutRight_clicked()
     curItem.end = ui->trackW->value();
     setPlay();
 }
-
 
 //определяет длину загруженного трека/видео
 void Player::durationChanged(qint64 dur)

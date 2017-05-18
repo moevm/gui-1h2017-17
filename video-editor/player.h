@@ -29,7 +29,7 @@ Q_SIGNALS:
 public slots:
     void playSelectedItem(QString);
     void updateTime();
-    void getPlayList(QList <PlayItem>, qint64);
+    void getPlayList(QList <PlayItem>, qint64, qint64);
 
 private slots:
 
@@ -55,17 +55,21 @@ private:
     PlayItem curItem; // текущий элемент в плеере
     PlayItem curAudioItem;
     QMediaPlaylist* playlist;
-    QMediaPlaylist* audioPlayList;
+    QMediaPlaylist* playlist1;
     QList <PlayItem> list;
+    QList <PlayItem> list1;
     bool isItem; //проверка сейчас в плеере единичный элемент (1) или плейлист (0)
     qint64 length; // длина плейлиста в милисекундах
     qint64 position; // позиция плейлиста
     bool wasStop;
+
+    bool isItem1;
+    qint64 length1;
     
     void setIcons();
     void initPlayer();
     void setPause();
-    void setPlay(bool isCutted);
+    void setPlay(/*bool isCuted*/); // 1 - два плеера, 0 - 1 плеер
     int k;
 
     static QString playIcon() {return ":/images/play.png"; }

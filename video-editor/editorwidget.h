@@ -14,7 +14,7 @@ class EditorWidget : public QWidget
     Q_OBJECT
 
  Q_SIGNALS:
-    void playUsersList(QList <PlayItem>, qint64);
+    void playUsersList(QList <PlayItem>, qint64, qint64);
 
 public:
     explicit EditorWidget(QWidget *parent = 0);
@@ -32,6 +32,8 @@ private:
     Ui::EditorWidget *ui;
     QList <PlayItem> list;
     qint64 length;
+    qint64 length1;
+    bool isMedia;
 
     static QString playIcon() {return ":/images/play.png"; }
 };

@@ -9,6 +9,7 @@ EditorWidget::EditorWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     length = 0;
+    length1 = 0;
     ui->pushButton->setIcon(QIcon(this->playIcon()));
 }
 
@@ -26,12 +27,6 @@ void EditorWidget::changeSize()
 
 void EditorWidget::addToPlayList(PlayItem item)
 {
-
-    item.absBegin = length + 1;
-    item.absEnd = item.absBegin + item.end - item.begin;
-    list.append(item);
-    length += (item.end - item.begin);
-
     QWidget* itemWidget = new QWidget();
     itemWidget->setAutoFillBackground(true);
     QPalette pal(palette());
@@ -46,20 +41,37 @@ void EditorWidget::addToPlayList(PlayItem item)
     QString str = item.url.right(item.url.length()-item.url.lastIndexOf('/')-1);
     name->setText(str);
     QString extension = item.url.right(3);
+    qDebug() << "length" << length <<length1;
     if(extension == "mp3"){
         ui->audioTrackWidget->setVisible(false);
         ui->audioTrack->addWidget(itemWidget);
+        isMedia = false;
+        qDebug() << "add" << isMedia << length1;
     }
 
     if(extension == "avi"){
         ui->widget->setVisible(false);
         ui->tracklist->addWidget(itemWidget);
+        isMedia = true;
+        qDebug() << "add" << isMedia << length;
     }
+
+    if (isMedia){
+        item.absBegin = length;
+        length += item.end - item.begin;
+    }
+    else{
+        item.absBegin = length1;
+        length1 += (item.end - item.begin);
+    }
+    item.absEnd = item.absBegin + item.end - item.begin;
+    qDebug() << "add1" << isMedia << item.absBegin << item.absEnd <<item.begin <<item.end;
+    list.append(item);
 
 }
 
 
 void EditorWidget::on_pushButton_clicked()
 {
-    emit playUsersList(list,length);
+    emit playUsersList(list,length,length1);
 }
